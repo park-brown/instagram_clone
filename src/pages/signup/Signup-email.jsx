@@ -1,22 +1,8 @@
-import {
-	Container,
-	FormControl,
-	Grid,
-	Box,
-	Typography,
-	TextField,
-	Button,
-	Divider,
-	Link,
-	IconButton,
-	InputAdornment
-} from '@material-ui/core';
+import { Container, FormControl, Grid, Box, Typography, TextField, Button, Divider, Link } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,20 +31,22 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const Login = () => {
-	const [showPassword, set__showPassword] = useState(false);
-	const handleClickShowPassword = () => {
-		set__showPassword((showPassword) => !showPassword);
-	};
+const EmailSignup = () => {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 
 	useEffect(() => {
-		document.title = 'instagram--login';
+		document.title = 'instagram--signup';
 	}, []);
 
 	const validationSchema = yup.object({
 		email: yup.string().email('Enter a valid email').required('Email is required'),
+		fullname: yup.string().min(3, 'fullname should at least containe 3 character').required('fullname is required'),
+		username: yup
+			.string()
+			.min(4, 'usename should be at least 4 character')
+			.max(15, 'username should be less than 15 character')
+			.required('username is required'),
 		password: yup.string().min(8, 'Password should be at least 8 characters').required('Password is required')
 	});
 
@@ -67,6 +55,8 @@ const Login = () => {
 	const formik = useFormik({
 		initialValues: {
 			email: '',
+			fullname: '',
+			username: '',
 			password: ''
 		},
 		validationSchema: validationSchema,
@@ -78,16 +68,41 @@ const Login = () => {
 	return (
 		<Container fluid='true' component='main'>
 			<Grid container justifyContent component='section' mt={4} mx='auto' className={classes.section}>
-				<Grid item className={classes.image_container}>
-					<img className={classes.image} src='/images/iphone-with-profile.jpg' alt='iphone-with-profile' />
-				</Grid>
 				{/* Form Container */}
 				<Grid item md={6} xs={12} container flexDirection='column'>
 					<Grid item container flexDirection='column' alignItems='center' className={classes.formContainer}>
-						<Grid item sx={{ textAlign: 'center', my: '2.25rem' }}>
+						<Grid item sx={{ textAlign: 'center', mt: '1.5rem' }}>
 							<img src='/images/logo.png' alt='logo' />
 						</Grid>
+						<Grid item sx={{ mt: '1rem' }}>
+							<Typography variant='body1' sx={{ color: 'GrayText', px: '0.5rem', width: 300 }}>
+								Sign up to see photos and videos from your friends.
+							</Typography>
+						</Grid>
+						<Grid item>
+							<Button
+								sx={{
+									color: 'white',
+									bgcolor: 'info.main',
+									textTransform: 'lowercase',
+									width: 300,
+									height: 33,
+									mt: '1rem',
+									'&:hover': {
+										bgcolor: 'info.dark'
+									}
+								}}
+								startIcon={<FacebookIcon />}>
+								Log in with Facebook
+							</Button>
+						</Grid>
+
+						<Grid item sx={{ my: '1rem', width: 300 }}>
+							<Divider sx={{ fontSize: '0.7rem', fontWeight: 'bold' }}>OR</Divider>
+						</Grid>
+
 						<FormControl component='form' onSubmit={formik.handleSubmit}>
+							{/*email field */}
 							<TextField
 								size='small'
 								autoComplete='true'
@@ -101,8 +116,41 @@ const Login = () => {
 								helperText={formik.touched.email && formik.errors.email}
 								type='email'
 								required
-								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.7rem' }}
+								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.5rem' }}
 							/>
+							{/*fullname field */}
+							<TextField
+								size='small'
+								autoComplete='true'
+								label='fullname'
+								id='fullname'
+								name='fullname'
+								value={formik.values.fullname}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								error={formik.touched.fullname && Boolean(formik.errors.fullname)}
+								helperText={formik.touched.fullname && formik.errors.fullname}
+								type='password'
+								required
+								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.5rem' }}
+							/>
+							{/*username field */}
+							<TextField
+								size='small'
+								autoComplete='true'
+								label='username'
+								id='username'
+								name='username'
+								value={formik.values.username}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								error={formik.touched.username && Boolean(formik.errors.username)}
+								helperText={formik.touched.username && formik.errors.username}
+								type='password'
+								required
+								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.5rem' }}
+							/>
+
 							<TextField
 								size='small'
 								autoComplete='true'
@@ -114,44 +162,34 @@ const Login = () => {
 								onBlur={formik.handleBlur}
 								error={formik.touched.password && Boolean(formik.errors.password)}
 								helperText={formik.touched.password && formik.errors.password}
-								type={showPassword ? 'text' : 'password'}
+								type='password'
 								required
-								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.7rem' }}
-								InputProps={{
-									endAdornment: (
-										<InputAdornment position='end'>
-											<IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} edge='end'>
-												{showPassword ? <Visibility /> : <VisibilityOff />}
-											</IconButton>
-										</InputAdornment>
-									)
-								}}
+								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.5rem' }}
 							/>
 						</FormControl>
+						{/*sign up button */}
 						<Button
 							type='submit'
+							disabled={formik.isValid}
 							sx={{
+								textTransform: 'lowercase',
 								color: 'white',
+								fontWeight: 'bold',
 								bgcolor: 'info.main',
 								width: 300,
 								mb: '10px',
-								'&:hover': { bgcolor: 'info.dark' }
+								'&:hover': { bgcolor: 'info.dark' },
+								'&:disabled': {
+									color: 'white',
+									bgcolor: '#c2eafc'
+								}
 							}}>
-							login
+							sign up
 						</Button>
-
-						<Divider sx={{ color: 'black', width: 300, height: 20 }} />
-
-						<Button
-							disabled={formik.isValid}
-							startIcon={<FacebookIcon />}
-							sx={{ color: 'primary.main', my: '12px', textTransform: 'lowercase' }}>
-							<Typography variant='subtitle1' color='primary'>
-								Log in with Facebook
+						<Link to='#' sx={{ mb: '2rem', width: 300 }}>
+							<Typography variant='caption' color='gray' sx={{ cursor: 'pointer' }}>
+								By signing up, you agree to our Terms , Data Policy and Cookies Policy .
 							</Typography>
-						</Button>
-						<Link to='#' sx={{ mb: '2rem' }}>
-							<Typography variant='subtitle2'>forget your password?</Typography>
 						</Link>
 					</Grid>
 					<Grid
@@ -167,10 +205,10 @@ const Login = () => {
 							justifyContent: 'center'
 						}}>
 						<Typography variant='body1' sx={{ marginRight: '8px' }}>
-							Don't have an account?
+							Have an account ?
 						</Typography>
 						<Link to='#'>
-							<Typography color='primary'>sign up</Typography>
+							<Typography color='primary'>log in</Typography>
 						</Link>
 					</Grid>
 					<Grid
@@ -180,7 +218,7 @@ const Login = () => {
 							flexDirection: 'column',
 							justifyContent: 'center',
 							alignItems: 'center',
-							mt: '1rem'
+							my: '1rem'
 						}}>
 						<Typography variant='body1' sx={{ mb: '1rem' }}>
 							Get the app
@@ -200,4 +238,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default EmailSignup;
