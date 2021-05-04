@@ -18,7 +18,9 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import { useFirebase } from 'react-redux-firebase';
+import { useHistory, Link as RouteLink } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 const useStyles = makeStyles((theme) => ({
 	section: {
 		maxWidth: 945,
@@ -50,6 +52,7 @@ const Login = () => {
 	const handleClickShowPassword = () => {
 		set__showPassword((showPassword) => !showPassword);
 	};
+	const history = useHistory();
 	const theme = useTheme();
 	const classes = useStyles(theme);
 
@@ -70,10 +73,37 @@ const Login = () => {
 			password: ''
 		},
 		validationSchema: validationSchema,
-		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+		onSubmit: async (values) => {
+			try {
+				await email_login({ email: values.email, password: values.password });
+			} catch (err) {
+				switch (err.code) {
+					case 'auth/user-not-found':
+						formik.isValid = false;
+						formik.values.email = '';
+						formik.values.password = '';
+						formik.errors.password = 'no user found, please try again';
+						break;
+					case 'auth/wrong-password':
+						formik.isValid = false;
+						formik.values.password = '';
+						formik.errors.password = 'please try again';
+						break;
+
+					default:
+						break;
+				}
+			}
 		}
 	});
+	//firebase section
+	const firebase = useFirebase();
+	const email_login = async ({ email, password }) => {
+		await firebase.login({ email, password });
+		setTimeout(() => {
+			history.push(`${ROUTES.DASHBOARD}`);
+		}, 1000);
+	};
 
 	return (
 		<Container fluid='true' component='main'>
@@ -129,23 +159,26 @@ const Login = () => {
 							/>
 						</FormControl>
 						<Button
+							disabled={!formik.isValid}
 							type='submit'
+							onClick={formik.handleSubmit}
 							sx={{
 								color: 'white',
 								bgcolor: 'info.main',
 								width: 300,
 								mb: '10px',
-								'&:hover': { bgcolor: 'info.dark' }
+								'&:hover': { bgcolor: 'info.dark' },
+								'&:disabled': {
+									color: 'white',
+									bgcolor: '#c2eafc'
+								}
 							}}>
 							login
 						</Button>
 
 						<Divider sx={{ color: 'black', width: 300, height: 20 }} />
 
-						<Button
-							disabled={formik.isValid}
-							startIcon={<FacebookIcon />}
-							sx={{ color: 'primary.main', my: '12px', textTransform: 'lowercase' }}>
+						<Button startIcon={<FacebookIcon />} sx={{ color: 'primary.main', my: '12px', textTransform: 'lowercase' }}>
 							<Typography variant='subtitle1' color='primary'>
 								Log in with Facebook
 							</Typography>
@@ -169,7 +202,7 @@ const Login = () => {
 						<Typography variant='body1' sx={{ marginRight: '8px' }}>
 							Don't have an account?
 						</Typography>
-						<Link to='#'>
+						<Link component={RouteLink} to='/signup'>
 							<Typography color='primary'>sign up</Typography>
 						</Link>
 					</Grid>

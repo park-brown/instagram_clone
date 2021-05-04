@@ -4,7 +4,10 @@ import * as yup from 'yup';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import React, { useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import { useFirebase } from 'react-redux-firebase';
+import { nanoid } from '@reduxjs/toolkit';
+import * as ROUTES from '../../constants/routes';
+import {Link as RouteLink} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
 	section: {
 		maxWidth: 945,
@@ -34,7 +37,19 @@ const useStyles = makeStyles((theme) => ({
 const EmailSignup = () => {
 	const theme = useTheme();
 	const classes = useStyles(theme);
-
+	const firebase = useFirebase();
+	const userSignUp = async ({ email, fullname, username, password }) => {
+		await firebase.createUser(
+			{ email, password },
+			{
+				fullName: fullname,
+				username: username,
+				emailAddress: email,
+				userId: nanoid(),
+				dateCreated: Date.now()
+			}
+		);
+	};
 	useEffect(() => {
 		document.title = 'instagram--signup';
 	}, []);
@@ -61,7 +76,12 @@ const EmailSignup = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			userSignUp({
+				email: values.email,
+				fullname: values.fullname,
+				username: values.username,
+				password: values.password
+			});
 		}
 	});
 
@@ -130,7 +150,7 @@ const EmailSignup = () => {
 								onBlur={formik.handleBlur}
 								error={formik.touched.fullname && Boolean(formik.errors.fullname)}
 								helperText={formik.touched.fullname && formik.errors.fullname}
-								type='password'
+								type='text'
 								required
 								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.5rem' }}
 							/>
@@ -146,7 +166,7 @@ const EmailSignup = () => {
 								onBlur={formik.handleBlur}
 								error={formik.touched.username && Boolean(formik.errors.username)}
 								helperText={formik.touched.username && formik.errors.username}
-								type='password'
+								type='text'
 								required
 								sx={{ width: 300, height: 64, mx: 'auto', mb: '0.5rem' }}
 							/>
@@ -170,7 +190,8 @@ const EmailSignup = () => {
 						{/*sign up button */}
 						<Button
 							type='submit'
-							disabled={formik.isValid}
+							onClick={formik.handleSubmit}
+							disabled={!formik.isValid}
 							sx={{
 								textTransform: 'lowercase',
 								color: 'white',
@@ -207,7 +228,7 @@ const EmailSignup = () => {
 						<Typography variant='body1' sx={{ marginRight: '8px' }}>
 							Have an account ?
 						</Typography>
-						<Link to='#'>
+						<Link component={RouteLink} to={ROUTES.LOGIN} sx={{ cursor: 'pointer' }}>
 							<Typography color='primary'>log in</Typography>
 						</Link>
 					</Grid>
