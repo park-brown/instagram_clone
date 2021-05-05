@@ -11,17 +11,38 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { FavoriteOutlined } from '@material-ui/icons';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import CachedOutlinedIcon from '@material-ui/icons/CachedOutlined';
+import { useTheme } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
+import { alpha } from '@material-ui/core/styles';
 const NavIconBox = () => {
 	const [index, setIndex] = useState(0);
-	const handleClick = (event, newIndex) => {
+	const toggleActiveIndex = (event, newIndex) => {
 		setIndex(newIndex);
 	};
+	const theme = useTheme();
+	//open menu state and function
+	const [anchorEl, setAnchorEl] = React.useState(null);
+	const open = Boolean(anchorEl);
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
 	return (
 		<ToggleButtonGroup
 			sx={{ width: { xs: 200, sm: 220 } }}
 			value={index}
 			exclusive
-			onChange={handleClick}
+			onChange={toggleActiveIndex}
 			aria-label='nav-icon'>
 			<ToggleButton
 				sx={{
@@ -74,10 +95,72 @@ const NavIconBox = () => {
 						bgcolor: 'white'
 					}
 				}}
+				id='basic-button'
+				aria-controls='basic-menu'
+				aria-haspopup='true'
+				aria-expanded={open ? 'true' : undefined}
+				onClick={handleClick}
 				value={4}
 				aria-label='acount'>
 				{index === 4 ? <AccountCircleIcon /> : <AccountCircleOutlinedIcon />}
 			</ToggleButton>
+			{/*Account dropdown menu */}
+			<Menu
+				sx={{
+					'& .MuiPaper-root': {
+						minWidth: 230,
+						minHeight: 194,
+						borderRadius: 2,
+						'& .MuiListItem-root': {
+							...theme.typography.body1,
+							'& .MuiListItemIcon-root': {
+								minWidth: 22,
+								marginRight: theme.spacing(1)
+							},
+							'& .MuiSvgIcon-root': {
+								fontSize: 22
+							}
+						}
+					}
+				}}
+				anchorReference='anchorPosition'
+				anchorPosition={{ top: 64, left: 1300 }}
+				id='basic-menu'
+				anchorEl={anchorEl}
+				open={open}
+				onClose={handleClose}
+				MenuListProps={{
+					'aria-labelledby': 'basic-button'
+				}}>
+				<MenuItem onClick={handleClose}>
+					<ListItemIcon>
+						<AccountCircleOutlinedIcon />
+					</ListItemIcon>
+					<ListItemText>Profile</ListItemText>
+				</MenuItem>
+				<MenuItem onClick={handleClose}>
+					<ListItemIcon>
+						<BookmarkBorderIcon />
+					</ListItemIcon>
+					<ListItemText>Saved</ListItemText>
+				</MenuItem>
+				<MenuItem onClick={handleClose}>
+					<ListItemIcon>
+						<SettingsOutlinedIcon />
+					</ListItemIcon>
+					<ListItemText>Settings</ListItemText>
+				</MenuItem>
+				<MenuItem onClick={handleClose}>
+					<ListItemIcon>
+						<CachedOutlinedIcon />
+					</ListItemIcon>
+					<ListItemText>Switch Accounts</ListItemText>
+				</MenuItem>
+				<Divider sx={{ borderColor: alpha(theme.palette.common.black, 0.5) }} />
+				<MenuItem onClick={handleClose}>
+					<ListItemText>Log Out</ListItemText>
+				</MenuItem>
+			</Menu>
 		</ToggleButtonGroup>
 	);
 };
