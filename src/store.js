@@ -5,5 +5,10 @@ export default configureStore({
 	reducer: {
 		firebase: firebaseReducer,
 		firestore: firestoreReducer
-	}
+	},
+	// Note that this will replace all default middleware
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: false
+		})
 });
