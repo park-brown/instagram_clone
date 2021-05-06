@@ -9,7 +9,7 @@ const Dashboard = () => {
 	return (
 		<React.Fragment>
 			<InstagramAppBar />
-			<Container fluid sx={{ height: '100vh', mt: '2rem' }} maxWidth='md' component='main'>
+			<Container fluid='true' sx={{ height: '100vh', mt: '2rem' }} maxWidth='md' component='main'>
 				<Grid container justifyContent='center' sx={{ height: '100%' }} component='section'>
 					<Grid item sm={8} xs={12} sx={{ pr: '20px' }}>
 						{/* Content go here */}

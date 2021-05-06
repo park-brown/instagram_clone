@@ -1,10 +1,24 @@
-import React from 'react';
-import { Paper, Grid, Typography, Button, Box, IconButton } from '@material-ui/core';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-
+import React, { useState } from 'react';
+import { Paper, Grid, Typography, Button, Box } from '@material-ui/core';
 import SuggestionCard from './SuggestionCard';
+import SuggestionRightArrow from './SuggestionRightArrow';
+import SuggestionLeftArrow from './SuggestionLeftArrow';
 const Suggestion = () => {
+	const [index, setIndex] = useState(0);
+	const maxIndex = 9;
+
+	const handleRightClick = () => {
+		if (index >= maxIndex) {
+			return index;
+		}
+		setIndex(index + 1);
+	};
+
+	const handleLeftClick = () => {
+		if (index <= 0) return;
+		setIndex(index - 1);
+	};
+
 	return (
 		<React.Fragment>
 			<Paper sx={{ height: 280, mt: '3rem', border: '1px solid  #e0e0e0' }}>
@@ -42,23 +56,7 @@ const Suggestion = () => {
 							position: 'relative',
 							pl: '24px'
 						}}>
-						<IconButton
-							sx={{
-								position: 'absolute',
-								top: '40%',
-								right: 0,
-								'& .MuiIconButton-label': {
-									bgcolor: '#9e9e9e',
-									color: 'white',
-									borderRadius: '50%',
-									'& .MuiSvgIcon-root': {
-										fontSize: '20px'
-									}
-								}
-							}}>
-							<KeyboardArrowRight />
-						</IconButton>
-
+						<SuggestionRightArrow handleRightClick={handleRightClick} />
 						{/*cards go here  */}
 						<Box
 							sx={{
@@ -67,30 +65,22 @@ const Suggestion = () => {
 								display: 'flex',
 								flexDirection: 'row',
 								alignItems: 'center',
+								gap: '12px',
 								justifyContent: 'flex-start',
 								position: 'relative',
+								cursor: 'pointer',
 								overflow: 'hidden'
 							}}>
-							{/*first card */}
-							<SuggestionCard />
+							{/*first card group */}
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
+							{/*second card group */}
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
 						</Box>
-
-						<IconButton
-							sx={{
-								position: 'absolute',
-								top: '40%',
-								left: 0,
-								'& .MuiIconButton-label': {
-									bgcolor: '#9e9e9e',
-									color: 'white',
-									borderRadius: '50%',
-									'& .MuiSvgIcon-root': {
-										fontSize: '20px'
-									}
-								}
-							}}>
-							<KeyboardArrowLeft />
-						</IconButton>
+						<SuggestionLeftArrow index={index} handleLeftClick={handleLeftClick} />
 					</Box>
 				</Grid>
 			</Paper>

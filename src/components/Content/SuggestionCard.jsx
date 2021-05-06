@@ -2,9 +2,29 @@ import React from 'react';
 import { Typography, Button, Box, IconButton, Avatar } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import VerifiedRoundedIcon from '@material-ui/icons/VerifiedRounded';
-const SuggestionCard = () => {
+import { useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+	root: ({ index }) => ({
+		transform: `translateX(${index * -560}px)`,
+		transition: `${theme.transitions.create(['transform'])}`
+	})
+}));
+const SuggestionCard = (props) => {
+	const theme = useTheme();
+
+	const classes = useStyles(props);
 	return (
-		<Box sx={{ width: 200, height: 208, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+		<Box
+			className={classes.root}
+			sx={{
+				width: 200,
+				height: 208,
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center'
+			}}>
 			<Box
 				sx={{
 					width: 176,

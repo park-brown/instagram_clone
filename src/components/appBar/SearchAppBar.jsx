@@ -16,7 +16,7 @@ export default function InstagramAppBar(props) {
 			<CssBaseline />
 			<AppBar sx={{ bgcolor: 'white', height: 60 }}>
 				<Toolbar>
-					<Container fluid sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					<Container fluid='true' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 						{/* instagram logo box */}
 						<Box sx={{ width: 103, height: 29, cursor: 'pointer', flexShrink: 0 }}>
 							<Avatar
