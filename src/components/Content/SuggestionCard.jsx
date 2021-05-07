@@ -2,22 +2,28 @@ import React from 'react';
 import { Typography, Button, Box, IconButton, Avatar } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import VerifiedRoundedIcon from '@material-ui/icons/VerifiedRounded';
-import { useTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 const useStyles = makeStyles((theme) => ({
 	root: ({ index }) => ({
 		transform: `translateX(${index * -560}px)`,
+		transition: `${theme.transitions.create(['transform'])}`
+	}),
+	matches_600: ({ index }) => ({
+		transform: `translateX(${index * -185}px)`,
 		transition: `${theme.transitions.create(['transform'])}`
 	})
 }));
 const SuggestionCard = (props) => {
 	const theme = useTheme();
+	const matches_600 = useMediaQuery(theme.breakpoints.down('sm'));
 
 	const classes = useStyles(props);
 	return (
 		<Box
-			className={classes.root}
+			className={clsx({ [classes.matches_600]: matches_600, [classes.root]: !matches_600 })}
 			sx={{
 				width: 200,
 				height: 208,
