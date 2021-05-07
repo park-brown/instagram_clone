@@ -17,13 +17,21 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Divider from '@material-ui/core/Divider';
 import InsertEmoticonSharpIcon from '@material-ui/icons/InsertEmoticonSharp';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+const useStyles = makeStyles({
+	expanded: {
+		display: 'none'
+	},
+	textShow: {
+		display: 'inline'
+	}
+});
 export default function PostCard() {
 	const [expanded, setExpanded] = React.useState(false);
-
+	const classes = useStyles();
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
@@ -121,23 +129,23 @@ export default function PostCard() {
 					}}>
 					{/*poster comment */}
 					<Box sx={{ width: '100%', height: 'auto', display: 'flex', flexWrap: 'wrap' }}>
-						<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }}>
+						<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }} component='div'>
 							gal_gadot{' '}
-							<Typography sx={{ fontSize: '0.8rem', color: 'GrayText', display: 'inline' }}>
-								Water is such a basic human need, what would you do without access to it?...{' '}
+							<Typography sx={{ fontSize: '0.8rem', color: 'GrayText', display: 'inline' }} component='div'>
+								Water is such a basic human need, what would you do without access to it?
+								<Typography
+									sx={{ fontSize: '0.8rem', color: 'GrayText' }}
+									className={clsx({ [classes.textShow]: expanded, [classes.expanded]: !expanded })}>
+									watch it on my platforms and share your thoughts with me
+								</Typography>
 								<ButtonBase
+									className={clsx({ [classes.expanded]: expanded })}
 									onClick={handleExpandClick}
 									sx={{ p: 0, fontSize: '0.8rem', color: 'gray', textTransform: 'lowercase', display: 'inline' }}>
-									more
+									...more
 								</ButtonBase>
 							</Typography>
 						</Typography>
-
-						<Collapse sx={{ width: '100%' }} in={expanded} timeout='auto' unmountOnExit>
-							<Typography sx={{ fontSize: '0.8rem', color: 'GrayText' }}>
-								See what Ariana did on this week's IMPACT
-							</Typography>
-						</Collapse>
 					</Box>
 					{/*View all comment button */}
 					<Button sx={{ px: 0, py: 0, my: '6px', fontSize: '14px', color: 'GrayText', textTransform: 'capitalize' }}>
@@ -149,7 +157,7 @@ export default function PostCard() {
 						<Box sx={{ display: 'flex' }}>
 							<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }}>
 								poshcloset_la{' '}
-								<Typography sx={{ display: 'inline', fontSize: '0.8rem', color: 'GrayText' }}>
+								<Typography sx={{ display: 'inline', fontSize: '0.8rem', color: 'GrayText' }} component='span'>
 									Thought you might enjoy this :)
 								</Typography>
 							</Typography>
@@ -158,7 +166,7 @@ export default function PostCard() {
 						<Box sx={{ display: 'flex' }}>
 							<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }}>
 								ppersiaa{' '}
-								<Typography sx={{ display: 'inline', fontSize: '0.8rem', color: 'GrayText' }}>
+								<Typography sx={{ display: 'inline', fontSize: '0.8rem', color: 'GrayText' }} component='span'>
 									{' '}
 									Another wonderful woman making an impact in your country.
 								</Typography>
