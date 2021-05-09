@@ -15,7 +15,6 @@ import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutline
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Collapse from '@material-ui/core/Collapse';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import InsertEmoticonSharpIcon from '@material-ui/icons/InsertEmoticonSharp';
@@ -132,7 +131,7 @@ export default function PostCard() {
 						<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }} component='div'>
 							gal_gadot{' '}
 							<Typography sx={{ fontSize: '0.8rem', color: 'GrayText', display: 'inline' }} component='div'>
-								Water is such a basic human need, what would you do without access to it?
+								Water is such a basic human need, what would you do without access to it?{' '}
 								<Typography
 									sx={{ fontSize: '0.8rem', color: 'GrayText' }}
 									className={clsx({ [classes.textShow]: expanded, [classes.expanded]: !expanded })}>
