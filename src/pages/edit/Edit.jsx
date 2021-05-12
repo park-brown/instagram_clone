@@ -8,6 +8,7 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import EditProfile from './editProfile/EditProfile';
 const Edit = () => {
 	const [value, setValue] = useState('1');
 	const theme = useTheme();
@@ -26,7 +27,7 @@ const Edit = () => {
 				fluid='true'
 				maxWidth='md'
 				sx={{
-					height: '820px',
+					height: 'auto',
 					px: { sm: '8px', xs: '0px' },
 					my: '2rem',
 					border: 1,
@@ -108,8 +109,17 @@ const Edit = () => {
 								</Typography>
 							</Grid>
 						</Grid>
-						<Grid item sx={{ flexGrow: 1, width: '100%', height: { md: '100%' } }} md={9}>
-							<TabPanel value='1'>Item One</TabPanel>
+						<Grid
+							item
+							sx={{
+								flexGrow: 1,
+								width: '100%',
+								height: { md: '100%', sm: 'calc(100% - 48px)', xs: 'calc(100% - 53px)' }
+							}}
+							md={9}>
+							<TabPanel value='1'>
+								<EditProfile />
+							</TabPanel>
 							<TabPanel value='2'>Item Two</TabPanel>
 							<TabPanel value='3'>Item Three</TabPanel>
 						</Grid>
