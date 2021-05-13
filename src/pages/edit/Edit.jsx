@@ -10,6 +10,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import EditProfile from './editProfile/EditProfile';
 import ChangePassword from './changePassword/ChangePassword';
+import AppsAndWebsites from './AppsAndWebsites/AppsAndWebsites';
 const Edit = () => {
 	const [value, setValue] = useState('1');
 	const theme = useTheme();
@@ -124,7 +125,9 @@ const Edit = () => {
 							<TabPanel value='2'>
 								<ChangePassword />
 							</TabPanel>
-							<TabPanel value='3'>Item Three</TabPanel>
+							<TabPanel value='3' sx={{ p: '0px' }}>
+								<AppsAndWebsites />
+							</TabPanel>
 						</Grid>
 					</TabContext>
 				</Grid>
