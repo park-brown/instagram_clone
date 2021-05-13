@@ -12,11 +12,12 @@ import EditProfile from './editProfile/EditProfile';
 import ChangePassword from './changePassword/ChangePassword';
 import AppsAndWebsites from './AppsAndWebsites/AppsAndWebsites';
 import EmailAndSMS from './EmailAndSMS/EmailAndSMS';
+import PushNotifications from './PushNotifications/PushNotifications';
 const Edit = () => {
 	const [value, setValue] = useState('1');
 	const theme = useTheme();
 	const below_960 = useMediaQuery(theme.breakpoints.down('md'));
-	console.log(below_960);
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -117,7 +118,8 @@ const Edit = () => {
 							sx={{
 								flexGrow: 1,
 								width: '100%',
-								height: { md: '100%', sm: 'calc(100% - 48px)', xs: 'calc(100% - 53px)' }
+								height: { md: '100%', sm: 'calc(100% - 48px)', xs: 'calc(100% - 53px)' },
+								alignSelf: { md: 'flex-start' }
 							}}
 							md={9}>
 							<TabPanel value='1'>
@@ -131,6 +133,9 @@ const Edit = () => {
 							</TabPanel>
 							<TabPanel value='4' sx={{ p: '0px' }}>
 								<EmailAndSMS />
+							</TabPanel>
+							<TabPanel value='5'>
+								<PushNotifications />
 							</TabPanel>
 						</Grid>
 					</TabContext>
