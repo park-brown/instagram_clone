@@ -11,6 +11,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import EditProfile from './editProfile/EditProfile';
 import ChangePassword from './changePassword/ChangePassword';
 import AppsAndWebsites from './AppsAndWebsites/AppsAndWebsites';
+import EmailAndSMS from './EmailAndSMS/EmailAndSMS';
 const Edit = () => {
 	const [value, setValue] = useState('1');
 	const theme = useTheme();
@@ -127,6 +128,9 @@ const Edit = () => {
 							</TabPanel>
 							<TabPanel value='3' sx={{ p: '0px' }}>
 								<AppsAndWebsites />
+							</TabPanel>
+							<TabPanel value='4' sx={{ p: '0px' }}>
+								<EmailAndSMS />
 							</TabPanel>
 						</Grid>
 					</TabContext>
