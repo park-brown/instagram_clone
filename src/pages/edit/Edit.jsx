@@ -16,6 +16,7 @@ import PushNotifications from './PushNotifications/PushNotifications';
 
 import ManageContact from './manageContact/ManageContact';
 import PrivacyAndSecurity from './PrivacyAndSecurity/PrivacyAndSecurity';
+import LoginActivity from './loginActivity/LoginActivity';
 const Edit = () => {
 	const [value, setValue] = useState('1');
 	const theme = useTheme();
@@ -146,6 +147,9 @@ const Edit = () => {
 							</TabPanel>
 							<TabPanel value='7'>
 								<PrivacyAndSecurity />
+							</TabPanel>
+							<TabPanel value='8'>
+								<LoginActivity />
 							</TabPanel>
 						</Grid>
 					</TabContext>
