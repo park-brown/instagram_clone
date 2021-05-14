@@ -15,6 +15,7 @@ import EmailAndSMS from './EmailAndSMS/EmailAndSMS';
 import PushNotifications from './PushNotifications/PushNotifications';
 
 import ManageContact from './manageContact/ManageContact';
+import PrivacyAndSecurity from './PrivacyAndSecurity/PrivacyAndSecurity';
 const Edit = () => {
 	const [value, setValue] = useState('1');
 	const theme = useTheme();
@@ -44,7 +45,7 @@ const Edit = () => {
 					container
 					sx={{
 						display: 'flex',
-						alignItems: 'center',
+						alignItems: 'flex-start',
 						justifyContent: 'flex-start',
 						height: '100%',
 						flexDirection: { md: 'row', sm: 'column', xs: 'column' }
@@ -53,10 +54,10 @@ const Edit = () => {
 						<Grid
 							item
 							sx={{
-								height: { md: '100%' },
 								maxHeight: { sm: '48px', md: '100%' },
 								display: 'flex',
-								flexDirection: { md: 'column', sm: 'row' }
+								flexDirection: { md: 'column', sm: 'row' },
+								alignSelf: 'stretch'
 							}}
 							md={3}
 							sm={12}>
@@ -69,6 +70,7 @@ const Edit = () => {
 								orientation={below_960 ? 'horizontal' : 'vertical'}
 								sx={{
 									flexGrow: 1,
+
 									width: { xs: '100vw', sm: '100%' },
 									borderRight: { md: '1px solid #e3e3e3' },
 									borderBottom: { sm: '1px solid #e3e3e3', xs: '1px solid #e3e3e3' },
@@ -130,10 +132,10 @@ const Edit = () => {
 							<TabPanel value='2'>
 								<ChangePassword />
 							</TabPanel>
-							<TabPanel value='3' sx={{ p: '0px' }}>
+							<TabPanel value='3'>
 								<AppsAndWebsites />
 							</TabPanel>
-							<TabPanel value='4' sx={{ p: '0px' }}>
+							<TabPanel value='4'>
 								<EmailAndSMS />
 							</TabPanel>
 							<TabPanel value='5'>
@@ -141,6 +143,9 @@ const Edit = () => {
 							</TabPanel>
 							<TabPanel value='6'>
 								<ManageContact />
+							</TabPanel>
+							<TabPanel value='7'>
+								<PrivacyAndSecurity />
 							</TabPanel>
 						</Grid>
 					</TabContext>

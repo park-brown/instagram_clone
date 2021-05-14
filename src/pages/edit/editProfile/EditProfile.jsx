@@ -259,7 +259,7 @@ const EditProfile = () => {
 				</Box>
 				<Box
 					sx={{
-						height: '32px',
+						height: { md: '32px', sm: '32px', xs: 'auto' },
 						display: 'flex',
 						flexDirection: { md: 'row', xs: 'column' },
 						alignItems: { md: 'center', xs: 'flex-start' },
