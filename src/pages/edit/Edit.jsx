@@ -13,6 +13,8 @@ import ChangePassword from './changePassword/ChangePassword';
 import AppsAndWebsites from './AppsAndWebsites/AppsAndWebsites';
 import EmailAndSMS from './EmailAndSMS/EmailAndSMS';
 import PushNotifications from './PushNotifications/PushNotifications';
+
+import ManageContact from './manageContact/ManageContact';
 const Edit = () => {
 	const [value, setValue] = useState('1');
 	const theme = useTheme();
@@ -136,6 +138,9 @@ const Edit = () => {
 							</TabPanel>
 							<TabPanel value='5'>
 								<PushNotifications />
+							</TabPanel>
+							<TabPanel value='6'>
+								<ManageContact />
 							</TabPanel>
 						</Grid>
 					</TabContext>
