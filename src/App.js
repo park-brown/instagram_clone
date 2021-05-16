@@ -4,6 +4,7 @@ import * as Routes from './constants/routes';
 import Dashboard from './pages/dashboard/Dashboard';
 import Profile from './pages/profile/Profile';
 import Edit from './pages/edit/Edit';
+import Submit from './pages/submit/Submit';
 
 const Login = lazy(() => import('./pages/login/Login'));
 const Signup = lazy(() => import('./pages/signup/Signup-email'));
@@ -17,6 +18,7 @@ function App() {
 					<Route exact path={Routes.SIGN_UP} component={Signup} />
 					<Route exact path={Routes.DASHBOARD} component={Dashboard} />
 					<Route exact path={Routes.EDIT_PROFILE} component={Edit} />
+					<Route exact path={Routes.SUBMIT} component={Submit} />
 				</Switch>
 			</Suspense>
 		</Router>

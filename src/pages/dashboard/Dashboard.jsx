@@ -1,7 +1,7 @@
 import { Container, Grid } from '@material-ui/core';
 import React from 'react';
 import InstagramAppBar from '../../components/appBar/SearchAppBar';
-import StoryFeed from '../../components/Content/StoryFeed';
+import CreatePost from '../../components/Content/CreatePost';
 import Suggestion from '../../components/Content/Suggestion';
 import PostCard from '../../components/PostCard/PostCard';
 import AccountBar from '../../components/SideBar/AccountBar';
@@ -14,7 +14,7 @@ const Dashboard = () => {
 				<Grid container justifyContent='center' sx={{ height: '100%' }} component='section'>
 					<Grid item sm={12} md={8} xs={12} sx={{ sm: { pr: '20px' } }}>
 						{/* Content go here */}
-						<StoryFeed />
+						<CreatePost />
 						<Suggestion />
 						{/*Post card go here */}
 						<Grid container sx={{ height: '100vh', mt: '1.5rem', flexDirection: 'column' }}>

@@ -14,7 +14,7 @@ const ChangePassword = () => {
 					<Typography>createdAt2021</Typography>
 				</Box>
 			</Grid>
-			<Grid Container component='form' sx={{ mt: '30px' }}>
+			<Grid container component='form' sx={{ mt: '30px' }}>
 				<Grid
 					item
 					sx={{

@@ -31,9 +31,9 @@ const LoginActivity = () => {
 					flexGrow: 1,
 					width: '100%',
 					pt: { md: '32px', sm: '32px', xs: '32px' },
-					pl: { md: '65px', sm: '65px', xs: '20px' },
+					pl: { md: '65px', sm: '65px', xs: '0px' },
 					pb: { md: '35px', sm: '35px', xs: '32px' },
-					pr: { md: '44px', sm: '32px', xs: '32px' }
+					pr: { md: '44px', sm: '32px', xs: '0px' }
 				}}>
 				<Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
 					<AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1bh-content' id='panel1bh-header'>
