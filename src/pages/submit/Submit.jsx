@@ -8,7 +8,9 @@ import {
 	ToggleButton,
 	ToggleButtonGroup,
 	Paper,
-	InputBase
+	InputBase,
+	Input,
+	Divider
 } from '@material-ui/core';
 import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
@@ -21,6 +23,7 @@ import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import LinkIcon from '@material-ui/icons/Link';
 import FormatListBulletedSharpIcon from '@material-ui/icons/FormatListBulletedSharp';
 import FormatListNumberedSharpIcon from '@material-ui/icons/FormatListNumberedSharp';
+import GavelSharpIcon from '@material-ui/icons/GavelSharp';
 import { useTheme } from '@material-ui/core/styles';
 import { useFormik } from 'formik';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -35,7 +38,7 @@ const Submit = () => {
 	const [value, setValue] = React.useState('1');
 	const theme = useTheme();
 	const below_600 = useMediaQuery(theme.breakpoints.down('sm'));
-	console.log(below_600);
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -105,7 +108,7 @@ const Submit = () => {
 									<Tab icon={<LinkIcon />} label={below_600 ? '' : 'Link'} value='3' />
 								</TabList>
 							</Box>
-							<TabPanel value='1' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+							<TabPanel value='1'>
 								{/*Post Area */}
 								<InputBase
 									id='title'
@@ -122,6 +125,7 @@ const Submit = () => {
 									sx={{
 										alignSelf: 'stretch',
 										border: 1,
+										width: '100%',
 										borderColor: '#e3e3e3',
 										borderRadius: '6px',
 										pl: '6px',
@@ -220,13 +224,194 @@ const Submit = () => {
 									</Button>
 								</Box>
 							</TabPanel>
-							<TabPanel value='2'>Item Two</TabPanel>
-							<TabPanel value='3'>Item Three</TabPanel>
+							{/*Image and video panel */}
+							<TabPanel value='2'>
+								{/*Post Area */}
+								<InputBase
+									id='title'
+									name='title'
+									placeholder='title'
+									inputProps={{ maxLength: '300' }}
+									value={formik.values.title}
+									onChange={formik.handleChange}
+									multiline
+									endAdornment={
+										<Box sx={{ p: '8px', color: 'GrayText', fontWeight: 500 }}>{formik.values.title.length}/300</Box>
+									}
+									maxRows={3}
+									sx={{
+										alignSelf: 'stretch',
+										border: 1,
+										width: '100%',
+										borderColor: '#e3e3e3',
+										borderRadius: '6px',
+										pl: '6px',
+										py: '5px',
+										'&:hover,&:focus': {
+											borderColor: '#000'
+										}
+									}}
+								/>
+								{/*Drop and Drag image box*/}
+								<Box
+									sx={{
+										alignSelf: 'stretch',
+										border: 1,
+										display: 'flex',
+										flexDirection: 'column',
+										borderColor: '#e3e3e3',
+										borderRadius: '6px',
+										mt: '12px',
+										px: '6px',
+										py: '5px',
+										'&:hover,&:focus': {
+											borderColor: '#000'
+										}
+									}}>
+									{/*text area */}
+									<Box sx={{ height: 'auto', display: 'flex', mt: '12px' }}>
+										<Box
+											sx={{
+												alignSelf: 'stretch',
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center',
+												minHeight: '136px',
+												width: '100%'
+											}}>
+											<Typography color='primary.main' sx={{ mr: '8px' }}>
+												Drag and drop images or{' '}
+											</Typography>
+
+											<label htmlFor='contained-button-file'>
+												<Input
+													sx={{ display: 'none' }}
+													accept='image/*'
+													id='contained-button-file'
+													multiple
+													type='file'
+												/>
+												<Button variant='outlined' component='span'>
+													Upload
+												</Button>
+											</label>
+										</Box>
+									</Box>
+								</Box>
+								{/*Action area */}
+								<Box
+									sx={{
+										height: '56px',
+										alignSelf: 'stretch',
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center'
+									}}>
+									<Button
+										disabled
+										variant='contained'
+										sx={{ ml: 'auto', '&.Mui-disabled': { opacity: 0.5, bgcolor: '#3f51b5', color: '#fff' } }}>
+										Post
+									</Button>
+								</Box>
+							</TabPanel>
+							{/*Link panel */}
+							<TabPanel value='3'>
+								<InputBase
+									id='title'
+									name='title'
+									placeholder='title'
+									inputProps={{ maxLength: '300' }}
+									value={formik.values.title}
+									onChange={formik.handleChange}
+									multiline
+									endAdornment={
+										<Box sx={{ p: '8px', color: 'GrayText', fontWeight: 500 }}>{formik.values.title.length}/300</Box>
+									}
+									maxRows={3}
+									sx={{
+										alignSelf: 'stretch',
+										border: 1,
+										width: '100%',
+										borderColor: '#e3e3e3',
+										borderRadius: '6px',
+										pl: '6px',
+										py: '5px',
+										'&:hover,&:focus': {
+											borderColor: '#000'
+										}
+									}}
+								/>
+								{/*post writeboard */}
+								<Box
+									sx={{
+										alignSelf: 'stretch',
+										border: 1,
+										display: 'flex',
+										flexDirection: 'column',
+										borderColor: '#e3e3e3',
+										borderRadius: '6px',
+										mt: '12px',
+										px: '6px',
+										py: '5px',
+										'&:hover,&:focus': {
+											borderColor: '#000'
+										}
+									}}>
+									{/*text area */}
+									<Box sx={{ height: 'auto', display: 'flex', mt: '12px' }}>
+										<InputBase
+											fullWidth
+											multiline
+											placeholder='Url'
+											sx={{ alignSelf: 'stretch', display: 'flex', alignItems: 'flex-start', minHeight: '36px' }}
+										/>
+									</Box>
+								</Box>
+								{/*Action area */}
+								<Box
+									sx={{
+										height: '56px',
+										alignSelf: 'stretch',
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center'
+									}}>
+									<Button
+										disabled
+										variant='contained'
+										sx={{ ml: 'auto', '&.Mui-disabled': { opacity: 0.5, bgcolor: '#3f51b5', color: '#fff' } }}>
+										Post
+									</Button>
+								</Box>
+							</TabPanel>
 						</TabContext>
 					</Paper>
 				</Grid>
 				{/*side content */}
-				<Grid item lg={4} md={4}></Grid>
+				<Grid item lg={4} md={4}>
+					<Paper sx={{ ml: '24px', p: '12px' }}>
+						<Box sx={{ display: 'flex', alignItems: 'center' }}>
+							<GavelSharpIcon sx={{ width: 30, height: 30, mr: '12px' }} />
+							<Typography variant='h6'>Posting rule</Typography>
+						</Box>
+						<Divider sx={{ mt: '6px' }} />
+						<Box sx={{ display: 'flex', flexDirection: 'column' }}>
+							<Typography variant='body1' sx={{ py: '10px', px: '5px' }}>
+								1. Remember the human
+							</Typography>
+							<Divider />
+							<Typography sx={{ py: '10px', px: '5px' }}>2. Behave like you would in real life</Typography>
+							<Divider />
+							<Typography sx={{ py: '10px', px: '5px' }}>3. Look for the original source of content</Typography>
+							<Divider />
+							<Typography sx={{ py: '10px', px: '5px' }}>4. Search for duplicates before posting</Typography>
+							<Divider />
+							<Typography sx={{ py: '10px', px: '5px' }}>5. Read the community’s rules</Typography>
+							<Divider />
+						</Box>
+					</Paper>
+				</Grid>
 			</Grid>
 		</Container>
 	);
