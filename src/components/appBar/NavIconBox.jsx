@@ -18,11 +18,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import CachedOutlinedIcon from '@material-ui/icons/CachedOutlined';
-import { useTheme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
+import { useTheme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import { alpha } from '@material-ui/core/styles';
+import * as Routes from '../../constants/routes';
 const NavIconBox = () => {
 	const [index, setIndex] = useState(0);
+	const history = useHistory();
+	const { uid } = useSelector((state) => state.firebase.auth);
 	const toggleActiveIndex = (event, newIndex) => {
 		setIndex(newIndex);
 	};
@@ -33,8 +38,9 @@ const NavIconBox = () => {
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
-	const handleClose = () => {
+	const handleClose = (direction) => {
 		setAnchorEl(null);
+		history.push(direction);
 	};
 
 	return (
@@ -132,7 +138,10 @@ const NavIconBox = () => {
 				MenuListProps={{
 					'aria-labelledby': 'basic-button'
 				}}>
-				<MenuItem onClick={handleClose}>
+				<MenuItem
+					onClick={() => {
+						handleClose(`/profile/${uid}`);
+					}}>
 					<ListItemIcon>
 						<AccountCircleOutlinedIcon />
 					</ListItemIcon>

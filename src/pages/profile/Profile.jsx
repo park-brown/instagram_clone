@@ -14,9 +14,10 @@ import TabList from '@material-ui/lab/TabList';
 import VideoLabelOutlinedIcon from '@material-ui/icons/VideoLabelOutlined';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import SearchAppBar from '../../components/appBar/SearchAppBar';
-
+import { useSelector } from 'react-redux';
 const Profile = () => {
 	const theme = useTheme();
+	const { fullName, username } = useSelector((state) => state.firebase.profile);
 	const below_600 = useMediaQuery(theme.breakpoints.down('sm'));
 	const [value, setValue] = useState('0');
 	const handleChange = (event, newValue) => {
@@ -24,8 +25,8 @@ const Profile = () => {
 	};
 
 	useEffect(() => {
-		document.title = `Lot Park (@createat2021) • Instagram photos and videos`;
-	}, []);
+		document.title = `${fullName} (${username}) • Instagram photos and videos`;
+	}, [fullName, username]);
 	return (
 		<React.Fragment>
 			<SearchAppBar />
@@ -114,7 +115,7 @@ const Profile = () => {
 									}}>
 									<Avatar
 										sx={{ width: { xs: '100%', sm: '50%' }, height: { xs: 'calc(100% - 200px)', sm: '100%' } }}
-										src='./images/profile__post__left.jpg'
+										src='/images/profile__post__left.jpg'
 										variant='square'
 									/>
 									<Grid
@@ -140,13 +141,13 @@ const Profile = () => {
 											}}>
 											<Avatar
 												sx={{ width: 136, height: 44, mr: '8px' }}
-												src='./images/appstore.png'
+												src='/images/appstore.png'
 												alt='apple-store'
 												variant='rounded'
 											/>
 											<Avatar
 												sx={{ width: 136, height: 44 }}
-												src='./images/googleplay.png'
+												src='/images/googleplay.png'
 												alt='google-play'
 												variant='rounded'
 											/>

@@ -19,6 +19,8 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useFirebase } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import { isEmpty } from 'react-redux-firebase';
 import { useHistory, Link as RouteLink } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +55,7 @@ const Login = () => {
 		set__showPassword((showPassword) => !showPassword);
 	};
 	const history = useHistory();
+	const auth = useSelector((state) => state.firebase.auth);
 	const theme = useTheme();
 	const classes = useStyles(theme);
 
@@ -100,10 +103,15 @@ const Login = () => {
 	const firebase = useFirebase();
 	const email_login = async ({ email, password }) => {
 		await firebase.login({ email, password });
-		setTimeout(() => {
-			history.push(`${ROUTES.DASHBOARD}`);
-		}, 1000);
+		// setTimeout(() => {
+		// 	history.push(`${ROUTES.DASHBOARD}`);
+		// }, 1000);
 	};
+	useEffect(() => {
+		if (!isEmpty(auth)) {
+			history.push(ROUTES.DASHBOARD);
+		}
+	}, [auth, history]);
 
 	return (
 		<Container fluid='true' component='main'>

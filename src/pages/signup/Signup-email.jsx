@@ -7,7 +7,10 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useFirebase } from 'react-redux-firebase';
 import { nanoid } from '@reduxjs/toolkit';
 import * as ROUTES from '../../constants/routes';
-import {Link as RouteLink} from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { isEmpty } from 'react-redux-firebase';
+import { useHistory } from 'react-router';
+import { Link as RouteLink } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
 	section: {
 		maxWidth: 945,
@@ -38,6 +41,8 @@ const EmailSignup = () => {
 	const theme = useTheme();
 	const classes = useStyles(theme);
 	const firebase = useFirebase();
+	const history = useHistory();
+	const auth = useSelector((state) => state.firebase.auth);
 	const userSignUp = async ({ email, fullname, username, password }) => {
 		await firebase.createUser(
 			{ email, password },
@@ -52,7 +57,10 @@ const EmailSignup = () => {
 	};
 	useEffect(() => {
 		document.title = 'instagram--signup';
-	}, []);
+		if (!isEmpty(auth)) {
+			history.push(ROUTES.DASHBOARD);
+		}
+	}, [auth, history]);
 
 	const validationSchema = yup.object({
 		email: yup.string().email('Enter a valid email').required('Email is required'),

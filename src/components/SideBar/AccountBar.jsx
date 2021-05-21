@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid, Avatar, Button, Typography } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 const AccountBar = () => {
+	const { fullName, username } = useSelector((state) => state.firebase.profile);
 	return (
 		<React.Fragment>
 			<Grid container sx={{ width: 294, height: 56, alignItems: 'center', my: '1rem', pl: '12px' }}>
@@ -14,10 +16,10 @@ const AccountBar = () => {
 				{/* user info */}
 				<Grid item sx={{ flexGrow: 1 }}>
 					<Typography variant='body2' sx={{ fontWeight: 500 }}>
-						user name
+						{username || 'username'}
 					</Typography>
 					<Typography variant='body2' color='GrayText'>
-						full name
+						{fullName || 'fullname'}
 					</Typography>
 				</Grid>
 				{/*switch button */}

@@ -10,7 +10,9 @@ import ScrollTop from './ScrollTop';
 import { Avatar } from '@material-ui/core';
 import SearchField from './Search';
 import NavIconBox from './NavIconBox';
+import { useHistory } from 'react-router';
 export default function InstagramAppBar(props) {
+	const history = useHistory();
 	return (
 		<React.Fragment>
 			<CssBaseline />
@@ -20,6 +22,7 @@ export default function InstagramAppBar(props) {
 						{/* instagram logo box */}
 						<Box sx={{ width: 103, height: 29, cursor: 'pointer', flexShrink: 0 }}>
 							<Avatar
+								onClick={() => history.push('/')}
 								variant='rounded'
 								sx={{ width: '100%', height: '100%', display: 'block' }}
 								src='/images/logo.png'

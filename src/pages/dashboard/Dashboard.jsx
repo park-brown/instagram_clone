@@ -1,5 +1,5 @@
 import { Container, Grid } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import InstagramAppBar from '../../components/appBar/SearchAppBar';
 import CreatePost from '../../components/Content/CreatePost';
 import Suggestion from '../../components/Content/Suggestion';
@@ -7,6 +7,9 @@ import PostCard from '../../components/PostCard/PostCard';
 import AccountBar from '../../components/SideBar/AccountBar';
 import SideSuggestion from '../../components/SideBar/SideSuggestion';
 const Dashboard = () => {
+	useEffect(() => {
+		document.title = 'instagram';
+	}, []);
 	return (
 		<React.Fragment>
 			<InstagramAppBar />
