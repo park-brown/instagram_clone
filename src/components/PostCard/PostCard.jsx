@@ -66,7 +66,12 @@ export default function PostCard({ info }) {
 					</Typography>
 				</Box>
 				{/*comment preview section */}
-				<PostCardCommentPreview />
+				<PostCardCommentPreview
+					date={info.dateCreated}
+					host={info.host}
+					caption={info.caption}
+					comments={info.comments}
+				/>
 				{/*user comment section */}
 				<Box sx={{ width: '100%', height: '40px', mt: '8px' }}>
 					<Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>

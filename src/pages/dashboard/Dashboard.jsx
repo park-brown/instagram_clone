@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 const Dashboard = () => {
 	// sync /photos from firestore into redux
-	useFirestoreConnect(['photos', 'users']);
+	useFirestoreConnect(['photos']);
 	const photos = useSelector((state) => state.firestore.data.photos);
 
 	useEffect(() => {

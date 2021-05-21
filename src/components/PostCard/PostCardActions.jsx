@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
 	FavoriteIcon: {
 		color: (like) => {
-			console.log(like);
 			return like === true ? '#f50057' : 'rgba(0,0,0,0.54)';
 		}
 	}

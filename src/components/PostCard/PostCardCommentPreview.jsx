@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, ButtonBase, Button, Divider } from '@material-ui/core';
-
+import { formatDistanceToNow } from 'date-fns';
 const useStyles = makeStyles({
 	expanded: {
 		display: 'none'
@@ -11,8 +11,10 @@ const useStyles = makeStyles({
 		display: 'inline'
 	}
 });
-const PostCardCommentPreview = () => {
+const PostCardCommentPreview = ({ host, caption, comments, date }) => {
 	const [expanded, setExpanded] = React.useState(false);
+	const size = comments.length;
+	const createdAt = formatDistanceToNow(date, { addSuffix: true });
 
 	const classes = useStyles();
 	const handleExpandClick = () => {
@@ -32,13 +34,13 @@ const PostCardCommentPreview = () => {
 				{/*poster comment */}
 				<Box sx={{ width: '100%', height: 'auto', display: 'flex', flexWrap: 'wrap' }}>
 					<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }} component='div'>
-						gal_gadot{' '}
+						{`${host}`}{' '}
 						<Typography sx={{ fontSize: '0.8rem', color: 'GrayText', display: 'inline' }} component='div'>
-							Water is such a basic human need, what would you do without access to it?{' '}
+							{`${caption}`}{' '}
 							<Typography
 								sx={{ fontSize: '0.8rem', color: 'GrayText' }}
 								className={clsx({ [classes.textShow]: expanded, [classes.expanded]: !expanded })}>
-								watch it on my platforms and share your thoughts with me
+								......
 							</Typography>
 							<ButtonBase
 								className={clsx({ [classes.expanded]: expanded })}
@@ -51,36 +53,28 @@ const PostCardCommentPreview = () => {
 				</Box>
 				{/*View all comment button */}
 				<Button sx={{ px: 0, py: 0, my: '6px', fontSize: '14px', color: 'GrayText', textTransform: 'capitalize' }}>
-					View all 455 comments
+					View all {size} comments
 				</Button>
 				{/*follower comments */}
 				<Box sx={{ width: '100%', height: 'auto', display: 'flex', flexDirection: 'column' }}>
-					{/*follower 1 */}
-					<Box sx={{ display: 'flex' }}>
-						<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }}>
-							poshcloset_la{' '}
-							<Typography sx={{ display: 'inline', fontSize: '0.8rem', color: 'GrayText' }} component='span'>
-								Thought you might enjoy this :)
+					{comments.map((comment, index) => (
+						<Box key={index} sx={{ display: 'flex' }}>
+							<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }}>
+								{comment.displayName}{' '}
+								<Typography sx={{ display: 'inline', fontSize: '0.8rem', color: 'GrayText' }} component='span'>
+									{' '}
+									{comment.comment}
+								</Typography>
 							</Typography>
-						</Typography>
-					</Box>
-					{/*follower 2 */}
-					<Box sx={{ display: 'flex' }}>
-						<Typography sx={{ fontWeight: 600, fontSize: '0.8rem', display: 'inline' }}>
-							ppersiaa{' '}
-							<Typography sx={{ display: 'inline', fontSize: '0.8rem', color: 'GrayText' }} component='span'>
-								{' '}
-								Another wonderful woman making an impact in your country.
-							</Typography>
-						</Typography>
-					</Box>
+						</Box>
+					))}
 				</Box>
 				{/*Date  */}
 				<Box>
-					<Button sx={{ p: 0, fontSize: '0.8rem', color: 'gray', textTransform: 'uppercase' }}>11 HOURS AGO</Button>
+					<Button sx={{ p: 0, fontSize: '0.8rem', color: 'gray', textTransform: 'uppercase' }}>{createdAt}</Button>
 				</Box>
 			</Box>
-			<Divider sx={{ width: '100%', mt: '1rem' }} />
+			<Divider sx={{ width: '100%', mt: '6px' }} />
 		</>
 	);
 };
