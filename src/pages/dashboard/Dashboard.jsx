@@ -1,4 +1,5 @@
 import { Container, Grid } from '@material-ui/core';
+import lodash from 'lodash';
 import React, { useEffect } from 'react';
 import InstagramAppBar from '../../components/appBar/SearchAppBar';
 import CreatePost from '../../components/Content/CreatePost';
@@ -6,7 +7,13 @@ import Suggestion from '../../components/Content/Suggestion';
 import PostCard from '../../components/PostCard/PostCard';
 import AccountBar from '../../components/SideBar/AccountBar';
 import SideSuggestion from '../../components/SideBar/SideSuggestion';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
 const Dashboard = () => {
+	// sync /photos from firestore into redux
+	useFirestoreConnect(['photos', 'users']);
+	const photos = useSelector((state) => state.firestore.data.photos);
+
 	useEffect(() => {
 		document.title = 'instagram';
 	}, []);
@@ -20,8 +27,11 @@ const Dashboard = () => {
 						<CreatePost />
 						<Suggestion />
 						{/*Post card go here */}
-						<Grid container sx={{ height: '100vh', mt: '1.5rem', flexDirection: 'column' }}>
-							<PostCard />
+						<Grid container sx={{ height: 'auto', mt: '1.5rem', flexDirection: 'column' }}>
+							{/* <PostCard /> */}
+							{lodash.map(photos, (info, key) => {
+								return <PostCard key={key} info={info} />;
+							})}
 						</Grid>
 					</Grid>
 					{/* Sidebar only visible when screen sizes are greater than 960 */}
