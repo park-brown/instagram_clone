@@ -23,7 +23,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import { alpha } from '@material-ui/core/styles';
-import * as Routes from '../../constants/routes';
+
 const NavIconBox = () => {
 	const [index, setIndex] = useState(0);
 	const history = useHistory();

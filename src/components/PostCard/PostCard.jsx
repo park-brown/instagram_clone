@@ -6,14 +6,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import InsertEmoticonSharpIcon from '@material-ui/icons/InsertEmoticonSharp';
 import PostCardActions from './PostCardActions';
 import PostCardCommentPreview from './PostCardCommentPreview';
 import { useHistory } from 'react-router';
+import PostCardUserComment from './PostCardUserComment';
+
 export default function PostCard({ info }) {
 	const history = useHistory();
 	const { host, dateCreated, imageSrc, caption, comments } = info;
@@ -83,28 +82,7 @@ export default function PostCard({ info }) {
 				{/*comment preview section */}
 				<PostCardCommentPreview date={dateCreated} host={host} caption={caption} comments={comments} />
 				{/*user comment section */}
-				<Box sx={{ width: '100%', height: '40px', mt: '8px' }}>
-					<Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-						{/*emoji box */}
-						<Box>
-							<IconButton sx={{ p: 0 }}>
-								<InsertEmoticonSharpIcon />
-							</IconButton>
-						</Box>
-						{/*add comment field */}
-						<InputBase sx={{ flexGrow: 1, ml: '8px' }} placeholder='Add a comment' />
-						{/*Post button target pseudo-classes style with no white space*/}
-						<Button
-							sx={{
-								color: 'info.main',
-								textTransform: 'capitalize',
-								'& :hover': { color: 'info.dark' },
-								'&.Mui-disabled': { opacity: 0.3, color: 'info.main' }
-							}}>
-							Post
-						</Button>
-					</Box>
-				</Box>
+				<PostCardUserComment />
 			</CardContent>
 		</Card>
 	);
