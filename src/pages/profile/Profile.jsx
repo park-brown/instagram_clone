@@ -15,18 +15,37 @@ import VideoLabelOutlinedIcon from '@material-ui/icons/VideoLabelOutlined';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import SearchAppBar from '../../components/appBar/SearchAppBar';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import { useFirestoreConnect, isEmpty, isLoaded } from 'react-redux-firebase';
 const Profile = () => {
 	const theme = useTheme();
-	const { fullName, username } = useSelector((state) => state.firebase.profile);
+
 	const below_600 = useMediaQuery(theme.breakpoints.down('sm'));
 	const [value, setValue] = useState('0');
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+	const { username } = useParams();
+
+	useFirestoreConnect([
+		{
+			collection: 'users',
+			where: [['username', '==', username]],
+			limit: 1
+		}
+	]);
+	const { users } = useSelector((state) => state.firestore.ordered);
 
 	useEffect(() => {
-		document.title = `${fullName} (${username}) • Instagram photos and videos`;
-	}, [fullName, username]);
+		document.title = `(${username}) • Instagram photos and videos`;
+	}, [username]);
+
+	if (!isLoaded(users)) {
+		return <span>Loading...</span>;
+	}
+	if (isEmpty(users)) {
+		return <span>No user Found</span>;
+	}
 	return (
 		<React.Fragment>
 			<SearchAppBar />
@@ -36,7 +55,7 @@ const Profile = () => {
 				<Grid container sx={{ height: 'auto' }}>
 					{/*Header */}
 					<Grid item container xs={12} sx={{ height: 'auto' }}>
-						{below_600 ? <HeaderMobile /> : <HeaderDesktop />}
+						{below_600 ? <HeaderMobile userInfo={users[0]} /> : <HeaderDesktop userInfo={users[0]} />}
 					</Grid>
 					<TabContext value={value}>
 						<Grid item container xs={12} sx={{ height: 56, mt: { sm: '3rem' } }}>

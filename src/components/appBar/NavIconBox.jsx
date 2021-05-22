@@ -27,7 +27,7 @@ import * as Routes from '../../constants/routes';
 const NavIconBox = () => {
 	const [index, setIndex] = useState(0);
 	const history = useHistory();
-	const { uid } = useSelector((state) => state.firebase.auth);
+	const { username } = useSelector((state) => state.firebase.profile);
 	const toggleActiveIndex = (event, newIndex) => {
 		setIndex(newIndex);
 	};
@@ -140,7 +140,7 @@ const NavIconBox = () => {
 				}}>
 				<MenuItem
 					onClick={() => {
-						handleClose(`/profile/${uid}`);
+						handleClose(`/${username}/`);
 					}}>
 					<ListItemIcon>
 						<AccountCircleOutlinedIcon />

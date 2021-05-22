@@ -13,38 +13,53 @@ import Button from '@material-ui/core/Button';
 import InsertEmoticonSharpIcon from '@material-ui/icons/InsertEmoticonSharp';
 import PostCardActions from './PostCardActions';
 import PostCardCommentPreview from './PostCardCommentPreview';
-
+import { useHistory } from 'react-router';
 export default function PostCard({ info }) {
+	const history = useHistory();
+	const { host, dateCreated, imageSrc, caption, comments } = info;
+	const handleClick = () => {
+		history.push(`/${host}/`);
+	};
 	return (
 		<Card sx={{ width: '100%', my: '1.5rem' }}>
 			<CardHeader
 				sx={{
 					'& .MuiCardHeader-content': {
-						cursor: 'pointer',
-						'& .MuiCardHeader-title': {
-							fontWeight: 550,
-							'&:hover': {
-								textDecoration: 'underline'
-							}
-						}
+						cursor: 'pointer'
 					}
 				}}
 				avatar={
-					<Avatar sx={{ cursor: 'pointer' }} aria-label='recipe' src={`/images/avatars/${info.host}.jpg`}></Avatar>
+					<Avatar
+						onClick={handleClick}
+						sx={{ cursor: 'pointer' }}
+						aria-label='recipe'
+						src={`/images/avatars/${host}.jpg`}></Avatar>
 				}
 				action={
 					<IconButton aria-label='settings'>
 						<MoreHorizIcon />
 					</IconButton>
 				}
-				title={info.host}
+				title={
+					<Typography
+						onClick={handleClick}
+						sx={{
+							fontWeight: 550,
+							fontSize: '1rem',
+							'&:hover': {
+								textDecoration: 'underline'
+							}
+						}}>
+						{host}{' '}
+					</Typography>
+				}
 			/>
 			<CardMedia
 				sx={{
 					height: 0,
 					paddingTop: '56.25%' // 16:9
 				}}
-				image={info.imageSrc}
+				image={imageSrc}
 				title='images'
 			/>
 
@@ -66,12 +81,7 @@ export default function PostCard({ info }) {
 					</Typography>
 				</Box>
 				{/*comment preview section */}
-				<PostCardCommentPreview
-					date={info.dateCreated}
-					host={info.host}
-					caption={info.caption}
-					comments={info.comments}
-				/>
+				<PostCardCommentPreview date={dateCreated} host={host} caption={caption} comments={comments} />
 				{/*user comment section */}
 				<Box sx={{ width: '100%', height: '40px', mt: '8px' }}>
 					<Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>

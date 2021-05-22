@@ -1,7 +1,10 @@
 import React from 'react';
 import { Grid, Avatar, Typography, IconButton, Button } from '@material-ui/core';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-const ProfileHeader_mobile = () => {
+const ProfileHeader_mobile = ({ userInfo }) => {
+	const { fullName, username, following, followers } = userInfo;
+	const following__Num = following.length;
+	const followers__Num = followers.length;
 	return (
 		<React.Fragment>
 			{/*Header image */}
@@ -17,7 +20,7 @@ const ProfileHeader_mobile = () => {
 				<Avatar sx={{ width: 78, height: 78, cursor: 'pointer' }} src='./images/avatars/default.png'></Avatar>
 				<Grid item sx={{ height: 24 }}>
 					<Typography variant='body1 ' sx={{ fontWeight: 'bold' }}>
-						fullname
+						{fullName}
 					</Typography>
 				</Grid>
 			</Grid>
@@ -33,7 +36,7 @@ const ProfileHeader_mobile = () => {
 				}}
 				component='section'>
 				<Grid item sx={{ height: 40, display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-					<Typography variant='body1'>createdAt2021</Typography>
+					<Typography variant='body1'>{username}</Typography>
 
 					<IconButton sx={{ color: 'common.black', ml: '0px' }}>
 						<SettingsOutlinedIcon />
@@ -91,7 +94,7 @@ const ProfileHeader_mobile = () => {
 						justifyContent: 'center',
 						cursor: 'pointer'
 					}}>
-					<Typography>0</Typography>
+					<Typography>{followers__Num}</Typography>
 					<Typography color='GrayText'>followers</Typography>
 				</Grid>
 				<Grid
@@ -105,7 +108,7 @@ const ProfileHeader_mobile = () => {
 						justifyContent: 'center',
 						cursor: 'pointer'
 					}}>
-					<Typography>0</Typography>
+					<Typography>{following__Num}</Typography>
 					<Typography color='GrayText'>following</Typography>
 				</Grid>
 			</Grid>
