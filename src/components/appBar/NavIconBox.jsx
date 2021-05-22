@@ -51,6 +51,9 @@ const NavIconBox = () => {
 			onChange={toggleActiveIndex}
 			aria-label='nav-icon'>
 			<ToggleButton
+				onClick={() => {
+					handleClose('/');
+				}}
 				sx={{
 					border: 'none',
 					'&.Mui-selected': {
@@ -62,6 +65,9 @@ const NavIconBox = () => {
 				{index === 0 ? <HomeIcon /> : <HomeOutlinedIcon />}
 			</ToggleButton>
 			<ToggleButton
+				onClick={() => {
+					handleClose('/direct/inbox/');
+				}}
 				sx={{
 					border: 'none',
 					'&.Mui-selected': {

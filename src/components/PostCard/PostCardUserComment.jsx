@@ -24,7 +24,7 @@ const PostCardUserComment = () => {
 		formik.values.comment += `${emojiObject.emoji}`;
 	};
 	return (
-		<Box sx={{ width: '100%', height: '40px', mt: '8px' }} component='form' onSubmit={formik.handleSubmit}>
+		<Box sx={{ width: '100%', height: 'auto', mt: '8px' }} component='form' onSubmit={formik.handleSubmit}>
 			<Box sx={{ display: 'flex', height: '100%', alignItems: 'center', position: 'relative' }}>
 				{/*emoji box */}
 				<Box>
@@ -43,6 +43,9 @@ const PostCardUserComment = () => {
 				/>
 				{/*add comment field */}
 				<InputBase
+					inputProps={{ maxLength: 140 }}
+					multiline
+					maxRows={3}
 					id='comment'
 					name='comment'
 					type='text'
@@ -53,6 +56,7 @@ const PostCardUserComment = () => {
 				/>
 				{/*Post button target pseudo-classes style with no white space*/}
 				<Button
+					disabled={formik.values.comment === '' || formik.isSubmitting}
 					type='submit'
 					sx={{
 						color: 'info.main',
