@@ -1,23 +1,46 @@
 import React, { useEffect } from 'react';
 import InstagramAppBar from '../../components/appBar/SearchAppBar';
 import { useTheme } from '@material-ui/core/styles';
-import { Container, Grid, Box, Typography, IconButton, Button, Tooltip, Paper, MobileStepper } from '@material-ui/core';
+import {
+	Container,
+	Grid,
+	Box,
+	Typography,
+	IconButton,
+	Button,
+	Tooltip,
+	Paper,
+	MobileStepper,
+	Avatar
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Skeleton from '@material-ui/core/Skeleton';
 import SendIcon from '@material-ui/icons/Send';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import ChatSearchUser from './ChatSearchUser';
+
+import { useSelector } from 'react-redux';
 const Chat = () => {
 	const theme = useTheme();
+	const [checked, setChecked] = React.useState(true);
+
+	const handleChange = (event) => {
+		setChecked(event.target.checked);
+	};
 	const [activeStep, setActiveStep] = React.useState(0);
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
 
+	{
+		/*when active step === 2 show chat room */
+	}
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
+	const targetedUser = useSelector((state) => state.firestore.ordered.users);
 	useEffect(() => {
 		document.title = `Inbox • Chats`;
 	}, []);
@@ -96,7 +119,7 @@ const Chat = () => {
 
 							<MobileStepper
 								variant='dots'
-								steps={3}
+								steps={2}
 								position='static'
 								activeStep={activeStep}
 								sx={{
@@ -118,9 +141,11 @@ const Chat = () => {
 										<Button
 											size='small'
 											onClick={handleNext}
-											disabled={activeStep === 1}
+											disabled={activeStep === 1 && checked === false}
 											sx={{
 												textTransform: 'capitalize',
+												color: 'info.main',
+												display: `${activeStep === 2 ? 'none' : 'flex'}`,
 												'&.Mui-disabled': { color: 'info.main', opacity: 0.5 }
 											}}>
 											Next
@@ -147,80 +172,64 @@ const Chat = () => {
 								width: '100%'
 							}}>
 							{/*Messenger 1 */}
-							<Box
-								sx={{
-									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center',
-									justifyContent: 'flex-start',
-									width: '100%',
-									py: '8px',
-									px: '16px'
-								}}>
-								<Skeleton variant='circular' width={56} height={56} />
+							{activeStep === 2 ? (
 								<Box
 									sx={{
 										display: 'flex',
-										flexDirection: 'column',
-										alignItems: 'flex-start',
-										flexGrow: 1,
-										height: '100%',
-										ml: '10px'
+										flexDirection: 'row',
+										alignItems: 'center',
+										justifyContent: 'flex-start',
+										width: '100%',
+										py: '8px',
+										px: '16px',
+										borderBottom: 1,
+										borderColor: '#e3e3e3',
+										bgcolor: '#eeeeee'
 									}}>
-									<Skeleton variant='text' width={116} height={24} />
-									<Skeleton variant='text' width={84} height={24} />
+									<Avatar variant='circular' sx={{ width: '48px', height: '48px' }} />
+									<Box
+										sx={{
+											display: 'flex',
+											flexDirection: 'column',
+											alignItems: 'flex-start',
+											flexGrow: 1,
+											height: '100%',
+											ml: '10px'
+										}}>
+										<Typography variant='body1' width={116} height={24}>
+											{targetedUser[0].fullName}
+										</Typography>
+										<Typography variant='body2' width={84} height={24}>
+											{targetedUser[0].username}
+										</Typography>
+									</Box>
 								</Box>
-							</Box>
-							{/*messenage 2 */}
-							<Box
-								sx={{
-									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center',
-									justifyContent: 'flex-start',
-									width: '100%',
-									py: '8px',
-									px: '16px'
-								}}>
-								<Skeleton variant='circular' width={56} height={56} />
+							) : (
 								<Box
 									sx={{
 										display: 'flex',
-										flexDirection: 'column',
-										alignItems: 'flex-start',
-										flexGrow: 1,
-										height: '100%',
-										ml: '10px'
+										flexDirection: 'row',
+										alignItems: 'center',
+										justifyContent: 'flex-start',
+										width: '100%',
+										py: '8px',
+										px: '16px'
 									}}>
-									<Skeleton variant='text' width={116} height={24} />
-									<Skeleton variant='text' width={84} height={24} />
+									<Skeleton variant='circular' width={56} height={56} />
+									<Box
+										sx={{
+											display: 'flex',
+											flexDirection: 'column',
+											alignItems: 'flex-start',
+											flexGrow: 1,
+											height: '100%',
+											ml: '10px'
+										}}>
+										<Skeleton variant='text' width={116} height={24} />
+										<Skeleton variant='text' width={84} height={24} />
+									</Box>
 								</Box>
-							</Box>
-							{/*Messenger 3 */}
-							<Box
-								sx={{
-									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center',
-									justifyContent: 'flex-start',
-									width: '100%',
-									py: '8px',
-									px: '16px'
-								}}>
-								<Skeleton variant='circular' width={56} height={56} />
-								<Box
-									sx={{
-										display: 'flex',
-										flexDirection: 'column',
-										alignItems: 'flex-start',
-										flexGrow: 1,
-										height: '100%',
-										ml: '10px'
-									}}>
-									<Skeleton variant='text' width={116} height={24} />
-									<Skeleton variant='text' width={84} height={24} />
-								</Box>
-							</Box>
+							)}
 						</Box>
 					</Grid>
 
@@ -260,7 +269,7 @@ const Chat = () => {
 								</Button>
 							</React.Fragment>
 						) : (
-							<p>to be continue</p>
+							<ChatSearchUser activeStep={activeStep} checked={checked} handleChange={handleChange} />
 						)}
 					</Grid>
 				</Grid>

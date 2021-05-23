@@ -3,13 +3,11 @@ import { Paper, Grid, Typography, Button, Box } from '@material-ui/core';
 import SuggestionCard from './SuggestionCard';
 import SuggestionRightArrow from './SuggestionRightArrow';
 import SuggestionLeftArrow from './SuggestionLeftArrow';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+
 const Suggestion = () => {
 	const [index, setIndex] = useState(0);
 	const maxIndex = 9;
-	const theme = useTheme();
-	const matches_600 = useMediaQuery(theme.breakpoints.down('xs'));
+
 	const handleRightClick = () => {
 		if (index >= maxIndex) {
 			return index;
@@ -75,13 +73,13 @@ const Suggestion = () => {
 								overflow: 'hidden'
 							}}>
 							{/*first card group */}
-							<SuggestionCard index={index} matches_600={matches_600} />
-							<SuggestionCard index={index} matches_600={matches_600} />
-							<SuggestionCard index={index} matches_600={matches_600} />
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
 							{/*second card group */}
-							<SuggestionCard index={index} matches_600={matches_600} />
-							<SuggestionCard index={index} matches_600={matches_600} />
-							<SuggestionCard index={index} matches_600={matches_600} />
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
+							<SuggestionCard index={index} />
 						</Box>
 						<SuggestionLeftArrow handleLeftClick={handleLeftClick} />
 					</Box>

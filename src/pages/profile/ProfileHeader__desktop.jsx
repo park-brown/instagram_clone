@@ -9,8 +9,8 @@ const ProfileHeader__desktop = ({ userInfo }) => {
 	const { uid } = useSelector((state) => state.firebase.auth);
 	const { fullName, username, following, followers, id } = userInfo;
 	const isCurrentUser = uid === id;
-	const following__Num = following.length || 0;
-	const followers__Num = followers.length || 0;
+	const following__Num = following.length;
+	const followers__Num = followers.length;
 
 	return (
 		<React.Fragment>
