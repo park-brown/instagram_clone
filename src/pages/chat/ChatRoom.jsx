@@ -1,14 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import Picker from 'emoji-picker-react';
 import { Grid, IconButton, InputBase, Box, Button, Avatar, Typography } from '@material-ui/core';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useSelector } from 'react-redux';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
+const validationSchema = yup.object({
+	message: yup.string('Enter your email').max(140).required('please enter some text')
+});
 const ChatRoom = () => {
 	//Message Receiver
 	const MR = useSelector((state) => state.firestore.ordered.users);
 	const { username } = MR[0];
+	const [chosenEmoji, setChosenEmoji] = useState(null);
+	const [showEmoji, setShowEmoji] = useState(false);
+	const toggleEmoji = () => {
+		setShowEmoji((showEmoji) => !showEmoji);
+	};
+	const formik = useFormik({
+		initialValues: {
+			message: ''
+		},
+		validationSchema: validationSchema,
+		onSubmit: (values) => {
+			alert(JSON.stringify(values, null, 2));
+		}
+	});
+	const onEmojiClick = (event, emojiObject) => {
+		setChosenEmoji(emojiObject);
+
+		formik.values.message += `${emojiObject.emoji}`;
+	};
+
 	return (
 		<Grid
 			container
@@ -47,6 +73,8 @@ const ChatRoom = () => {
 			</Grid>
 			<Grid
 				item
+				component='form'
+				onSubmit={formik.handleSubmit}
 				sx={{
 					height: '50px',
 					width: '90%',
@@ -55,18 +83,47 @@ const ChatRoom = () => {
 					alignItems: 'center',
 					mb: '1rem',
 					mx: '0.5rem',
-
+					position: 'relative',
 					border: 1,
 					borderColor: '#e3e3e3',
 					borderRadius: '30px'
 				}}>
 				{/*input area */}
-				<IconButton>
+				<IconButton onClick={toggleEmoji}>
 					<InsertEmoticonIcon />
 				</IconButton>
-				<InputBase multiline maxRows={3} sx={{ pl: '6px', flexGrow: 1 }} placeholder='Message...'></InputBase>
+				<Picker
+					pickerStyle={{
+						position: 'absolute',
+						left: '-27px',
+						bottom: '50px',
+						display: `${showEmoji === false ? 'none' : 'flex'} `
+					}}
+					onEmojiClick={onEmojiClick}
+				/>
+				<InputBase
+					multiline
+					id='message'
+					name='message'
+					type='text'
+					onChange={formik.handleChange}
+					onBlur={formik.handleBlur}
+					value={formik.values.message}
+					maxRows={3}
+					sx={{ pl: '6px', flexGrow: 1 }}
+					placeholder='Message...'></InputBase>
 				<Box sx={{ display: 'flex' }}>
-					<Button sx={{ mr: '5px', color: 'info.main', textTransform: 'capitalize' }}>Send</Button>
+					<Button
+						disabled={!formik.dirty && !formik.values.message}
+						type='submit'
+						sx={{
+							mr: '5px',
+							color: 'info.main',
+							textTransform: 'capitalize',
+							'&.Mui-disabled': { color: 'info.main', opacity: 0.5 }
+						}}>
+						Send
+					</Button>
 				</Box>
 			</Grid>
 		</Grid>

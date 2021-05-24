@@ -103,7 +103,7 @@ const Chat = () => {
 										top: '50%',
 										left: '50%',
 										transform: 'translate(-50%,-50%)',
-										fontSize: { md: '0.8rem', sm: '0.8rem' }
+										fontSize: { md: '1.2rem', sm: '1.2rem' }
 									}}>
 									chats
 								</Typography>
@@ -115,7 +115,7 @@ const Chat = () => {
 										top: '50%',
 										left: '50%',
 										transform: 'translate(-50%,-50%)',
-										fontSize: { md: '0.8rem', sm: '0.8rem' }
+										fontSize: { md: '1.2rem', sm: '1.2rem' }
 									}}>
 									New Messages
 								</Typography>

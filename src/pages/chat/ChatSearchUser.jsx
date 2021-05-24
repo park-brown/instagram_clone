@@ -73,7 +73,7 @@ const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 				{formik.values.userInput === '' ? (
 					<Box sx={{ width: '50%', height: '50%', ml: '1rem' }}>
 						<Typography variant='h6' sx={{ my: '2rem' }}>
-							Sorry
+							suggestion
 						</Typography>
 						<Typography variant='body1'>No account found</Typography>
 					</Box>
