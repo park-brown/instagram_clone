@@ -23,7 +23,7 @@ import ChatSearchUser from './ChatSearchUser';
 import { useSelector } from 'react-redux';
 const Chat = () => {
 	const theme = useTheme();
-	const [checked, setChecked] = React.useState(true);
+	const [checked, setChecked] = React.useState(false);
 
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
@@ -49,7 +49,11 @@ const Chat = () => {
 			<InstagramAppBar />
 			<Container
 				fluid='true'
-				sx={{ height: { md: '80vh', sm: '80vh', xs: '75vh' }, mt: '2rem' }}
+				sx={{
+					height: { md: '80vh', sm: '80vh', xs: '90vh' },
+					mt: { md: '2rem', sm: '2rem', xs: '1rem' },
+					px: { xs: 0, sm: '1rem', md: '1rem' }
+				}}
 				maxWidth='md'
 				component='main'>
 				<Grid
@@ -124,7 +128,7 @@ const Chat = () => {
 								activeStep={activeStep}
 								sx={{
 									width: '100%',
-									maxHeight: '44px',
+									height: '60px',
 									borderBottom: 1,
 									borderColor: '#e3e3e3',
 									flexGrow: 1,
@@ -141,7 +145,7 @@ const Chat = () => {
 										<Button
 											size='small'
 											onClick={handleNext}
-											disabled={activeStep === 1 && checked === false}
+											disabled={!checked}
 											sx={{
 												textTransform: 'capitalize',
 												color: 'info.main',

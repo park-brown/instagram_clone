@@ -32,7 +32,7 @@ const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 				item
 				component='form'
 				sx={{
-					height: '44px',
+					height: '60px',
 					width: '100%',
 					display: `${activeStep === 2 ? 'none' : 'flex'}`,
 					flexDirection: 'row',
