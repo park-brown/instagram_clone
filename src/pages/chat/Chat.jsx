@@ -1,29 +1,16 @@
 import React, { useEffect } from 'react';
 import InstagramAppBar from '../../components/appBar/SearchAppBar';
 import { useTheme } from '@material-ui/core/styles';
-import {
-	Container,
-	Grid,
-	Box,
-	Typography,
-	IconButton,
-	Button,
-	Tooltip,
-	Paper,
-	MobileStepper,
-	Avatar
-} from '@material-ui/core';
+import { Container, Grid, Box, IconButton, Button, Tooltip, Paper, MobileStepper } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import Skeleton from '@material-ui/core/Skeleton';
-import SendIcon from '@material-ui/icons/Send';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import ChatSearchUser from './ChatSearchUser';
-
-import { useSelector } from 'react-redux';
+import { renderHeader } from './SidebarHeader';
+import { renderFriendList } from './SideBarMessenger';
+import Content from './Content';
 const Chat = () => {
 	const theme = useTheme();
-	const [checked, setChecked] = React.useState(false);
+	const [checked, setChecked] = React.useState(true);
 
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
@@ -32,18 +19,17 @@ const Chat = () => {
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+		setChecked(!checked);
 	};
 
-	{
-		/*when active step === 2 show chat room */
-	}
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
-	const targetedUser = useSelector((state) => state.firestore.ordered.users);
+
 	useEffect(() => {
 		document.title = `Inbox • Chats`;
 	}, []);
+
 	return (
 		<React.Fragment>
 			<InstagramAppBar />
@@ -95,31 +81,7 @@ const Chat = () => {
 								width: '100%',
 								position: 'relative'
 							}}>
-							{activeStep === 0 ? (
-								<Typography
-									variant='h6'
-									sx={{
-										position: 'absolute',
-										top: '50%',
-										left: '50%',
-										transform: 'translate(-50%,-50%)',
-										fontSize: { md: '1.2rem', sm: '1.2rem' }
-									}}>
-									chats
-								</Typography>
-							) : (
-								<Typography
-									variant='h6'
-									sx={{
-										position: 'absolute',
-										top: '50%',
-										left: '50%',
-										transform: 'translate(-50%,-50%)',
-										fontSize: { md: '1.2rem', sm: '1.2rem' }
-									}}>
-									New Messages
-								</Typography>
-							)}
+							{renderHeader(activeStep)}
 
 							<MobileStepper
 								variant='dots'
@@ -176,64 +138,8 @@ const Chat = () => {
 								width: '100%'
 							}}>
 							{/*Messenger 1 */}
-							{activeStep === 2 ? (
-								<Box
-									sx={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										width: '100%',
-										py: '8px',
-										px: '16px',
-										borderBottom: 1,
-										borderColor: '#e3e3e3',
-										bgcolor: '#eeeeee'
-									}}>
-									<Avatar variant='circular' sx={{ width: '48px', height: '48px' }} />
-									<Box
-										sx={{
-											display: 'flex',
-											flexDirection: 'column',
-											alignItems: 'flex-start',
-											flexGrow: 1,
-											height: '100%',
-											ml: '10px'
-										}}>
-										<Typography variant='body1' width={116} height={24}>
-											{targetedUser[0].fullName}
-										</Typography>
-										<Typography variant='body2' width={84} height={24}>
-											{targetedUser[0].username}
-										</Typography>
-									</Box>
-								</Box>
-							) : (
-								<Box
-									sx={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										width: '100%',
-										py: '8px',
-										px: '16px'
-									}}>
-									<Skeleton variant='circular' width={56} height={56} />
-									<Box
-										sx={{
-											display: 'flex',
-											flexDirection: 'column',
-											alignItems: 'flex-start',
-											flexGrow: 1,
-											height: '100%',
-											ml: '10px'
-										}}>
-										<Skeleton variant='text' width={116} height={24} />
-										<Skeleton variant='text' width={84} height={24} />
-									</Box>
-								</Box>
-							)}
+
+							{renderFriendList(activeStep)}
 						</Box>
 					</Grid>
 
@@ -253,28 +159,7 @@ const Chat = () => {
 							alignItems: 'center',
 							justifyContent: 'center'
 						}}>
-						{activeStep === 0 ? (
-							<React.Fragment>
-								<SendIcon sx={{ width: 96, height: 96 }} />
-								<Typography variant='h3'>Your Messages</Typography>
-								<Typography variant='h6' sx={{ px: '10px' }}>
-									Send private photos and messages to a friend or group.
-								</Typography>
-								<Button
-									onClick={handleNext}
-									variant='contained'
-									sx={{
-										mt: '30px',
-										bgcolor: 'info.main',
-										'& .MuiButton-label': { textTransform: 'capitalize' },
-										'&:hover,&:active': { bgcolor: 'info.dark' }
-									}}>
-									Send Messages
-								</Button>
-							</React.Fragment>
-						) : (
-							<ChatSearchUser activeStep={activeStep} checked={checked} handleChange={handleChange} />
-						)}
+						<Content handleNext={handleNext} activeStep={activeStep} checked={checked} handleChange={handleChange} />
 					</Grid>
 				</Grid>
 			</Container>

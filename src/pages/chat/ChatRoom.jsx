@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Picker from 'emoji-picker-react';
@@ -6,12 +6,14 @@ import { Grid, IconButton, InputBase, Box, Button, Avatar, Typography } from '@m
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useSelector } from 'react-redux';
+import { useFirestore } from 'react-redux-firebase';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
+
 const validationSchema = yup.object({
-	message: yup.string('Enter your email').max(140).required('please enter some text')
+	message: yup.string('Enter your email').min(1).max(140).required('please enter some text')
 });
-const ChatRoom = () => {
+const ChatRoom = ({ activeStep }) => {
 	//Message Receiver
 	const MR = useSelector((state) => state.firestore.ordered.users);
 	const { username } = MR[0];
@@ -26,7 +28,7 @@ const ChatRoom = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			sendMessage();
 		}
 	});
 	const onEmojiClick = (event, emojiObject) => {
@@ -34,7 +36,11 @@ const ChatRoom = () => {
 
 		formik.values.message += `${emojiObject.emoji}`;
 	};
+	const targetedUser = useSelector((state) => state.firestore.ordered.users);
 
+	function sendMessage() {
+		const message = { sendAt: Date.now(), text: 'Sample', sendBy: 'test', sendTo: 'test' };
+	}
 	return (
 		<Grid
 			container

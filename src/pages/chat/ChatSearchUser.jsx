@@ -3,7 +3,7 @@ import { Grid, Box, Typography, InputBase, Skeleton, Avatar, Checkbox } from '@m
 import { useFirestoreConnect, isEmpty } from 'react-redux-firebase';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
-import ChatRoom from './ChatRoom';
+
 const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 	const formik = useFormik({
 		initialValues: {
@@ -20,13 +20,13 @@ const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 			limit: 10
 		}
 	]);
+
 	const targetedUser = useSelector((state) => state.firestore.ordered.users);
 
 	return (
 		<Grid
 			container
 			sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-			{activeStep === 2 ? <ChatRoom /> : null}
 			<Grid
 				onSubmit={formik.handleSubmit}
 				item
