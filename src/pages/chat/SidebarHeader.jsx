@@ -30,6 +30,20 @@ export const renderHeader = (activeStep) => {
 					New Messages
 				</Typography>
 			);
+		case 2:
+			return (
+				<Typography
+					variant='h6'
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%,-50%)',
+						fontSize: { md: '1.2rem', sm: '1.2rem' }
+					}}>
+					username
+				</Typography>
+			);
 		default:
 			return;
 	}

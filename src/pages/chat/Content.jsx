@@ -2,8 +2,9 @@ import React from 'react';
 import { Typography, Button } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import ChatSearchUser from './ChatSearchUser';
-import ChatRoom from './ChatRoom';
-const Content = ({ activeStep, handleNext, checked, handleChange }) => {
+import ChatRoomTabPanel from './ChatRoomTabPanel';
+
+const Content = ({ activeStep, handleNext, checked, handleChange, tabIndex }) => {
 	const render = () => {
 		switch (activeStep) {
 			case 0:
@@ -30,7 +31,7 @@ const Content = ({ activeStep, handleNext, checked, handleChange }) => {
 			case 1:
 				return <ChatSearchUser activeStep={activeStep} checked={checked} handleChange={handleChange} />;
 			case 2:
-				return <ChatRoom />;
+				return <ChatRoomTabPanel tabIndex={tabIndex} />;
 			default:
 				return null;
 		}

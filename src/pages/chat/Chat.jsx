@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import { renderHeader } from './SidebarHeader';
-import { renderFriendList } from './SideBarMessenger';
+import { ChatList } from './ChatList';
 import Content from './Content';
 const Chat = () => {
 	const theme = useTheme();
@@ -14,6 +14,12 @@ const Chat = () => {
 
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
+	};
+	//set Tab index state
+	const [tabIndex, setTabIndex] = React.useState(0);
+
+	const handleTabChange = (event, newValue) => {
+		setTabIndex(newValue);
 	};
 	const [activeStep, setActiveStep] = React.useState(0);
 
@@ -135,11 +141,12 @@ const Chat = () => {
 								justifyContent: 'flex-start',
 								alignItems: 'center',
 								flexGrow: 1,
-								width: '100%'
+								width: '100%',
+								overflowY: 'hidden'
 							}}>
 							{/*Messenger 1 */}
 
-							{renderFriendList(activeStep)}
+							<ChatList activeStep={activeStep} tabIndex={tabIndex} handleTabChange={handleTabChange} />
 						</Box>
 					</Grid>
 
@@ -159,7 +166,13 @@ const Chat = () => {
 							alignItems: 'center',
 							justifyContent: 'center'
 						}}>
-						<Content handleNext={handleNext} activeStep={activeStep} checked={checked} handleChange={handleChange} />
+						<Content
+							handleNext={handleNext}
+							activeStep={activeStep}
+							checked={checked}
+							handleChange={handleChange}
+							tabIndex={tabIndex}
+						/>
 					</Grid>
 				</Grid>
 			</Container>
