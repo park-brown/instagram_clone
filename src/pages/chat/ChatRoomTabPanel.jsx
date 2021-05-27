@@ -1,15 +1,15 @@
 import React from 'react';
 import TabPanel from './TabPanel';
 import ChatRoom from './ChatRoom';
-const ChatRoomTabPanel = ({ tabIndex }) => {
+
+const ChatRoomTabPanel = ({ tabIndex, chatlist }) => {
 	return (
 		<React.Fragment>
-			<TabPanel value={tabIndex} index={0}>
-				<ChatRoom />
-			</TabPanel>
-			<TabPanel value={tabIndex} index={1}>
-				<ChatRoom />
-			</TabPanel>
+			{chatlist.map((item, key) => (
+				<TabPanel key={item.key} value={tabIndex} index={key}>
+					<ChatRoom key={item.key} item={item} />
+				</TabPanel>
+			))}
 		</React.Fragment>
 	);
 };

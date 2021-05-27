@@ -16,10 +16,10 @@ function App() {
 					<Route exact path={Routes.LOGIN} component={Login} />
 					<Route exact path={Routes.SIGN_UP} component={Signup} />
 					<Route exact path={Routes.CHAT} component={Chat} />
+					<Route exact path={Routes.SUBMIT} component={Submit} />
 					<Route exact path={Routes.PROFILE} component={Profile} />
 					<Route exact path={Routes.DASHBOARD} component={Dashboard} />
 					<Route exact path={Routes.EDIT_PROFILE} component={Edit} />
-					<Route exact path={Routes.SUBMIT} component={Submit} />
 				</Switch>
 			</Suspense>
 		</Router>

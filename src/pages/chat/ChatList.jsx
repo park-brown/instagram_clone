@@ -2,7 +2,7 @@ import { Box, Skeleton } from '@material-ui/core';
 import React from 'react';
 import ChatListTabs from './ChatListTabs';
 
-export const ChatList = ({ activeStep, tabIndex, handleTabChange }) => {
+export const ChatList = ({ activeStep, tabIndex, handleTabChange, chatlist }) => {
 	const switchBetweenSteps = () => {
 		switch (activeStep) {
 			case 0:
@@ -60,7 +60,7 @@ export const ChatList = ({ activeStep, tabIndex, handleTabChange }) => {
 					</Box>
 				);
 			case 2:
-				return <ChatListTabs tabIndex={tabIndex} handleTabChange={handleTabChange} />;
+				return <ChatListTabs chatlist={chatlist} tabIndex={tabIndex} handleTabChange={handleTabChange} />;
 			default:
 				return;
 		}

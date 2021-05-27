@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Picker from 'emoji-picker-react';
@@ -7,11 +7,28 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
-
+import { useFirestoreConnect, isEmpty, useFirestore } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
 const validationSchema = yup.object({
 	message: yup.string('Enter your email').min(1).max(140).required('please enter some text')
 });
-const ChatRoom = () => {
+const ChatRoom = ({ item }) => {
+	const { userId, username } = useSelector((state) => state.firebase.profile);
+	const { username: name, userId: id } = item;
+	const firestore = useFirestore();
+	useFirestoreConnect({
+		collection: 'chatRoom',
+		where: ['members', '==', [`${userId}`, `${id}`]],
+		storeAs: 'chatRoom'
+	});
+
+	const { chatRoom } = useSelector((state) => state.firestore.data);
+	useEffect(() => {
+		if (isEmpty(chatRoom)) {
+			return firestore.collection('chatRoom').add({ members: [userId, id], nameList: [username, name] });
+		}
+	}, [id, name, chatRoom, userId, username]);
+
 	const [chosenEmoji, setChosenEmoji] = useState(null);
 	const [showEmoji, setShowEmoji] = useState(false);
 	const toggleEmoji = () => {
@@ -58,7 +75,7 @@ const ChatRoom = () => {
 						sx={{ width: 24, height: 24, mr: '10px', cursor: 'pointer' }}
 					/>
 					<Typography variant='subtitle1' sx={{ cursor: 'pointer' }}>
-						{'username'}
+						{name}
 					</Typography>
 				</Box>
 				<IconButton sx={{ height: '48px' }}>

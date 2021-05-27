@@ -4,7 +4,7 @@ import SendIcon from '@material-ui/icons/Send';
 import ChatSearchUser from './ChatSearchUser';
 import ChatRoomTabPanel from './ChatRoomTabPanel';
 
-const Content = ({ activeStep, handleNext, checked, handleChange, tabIndex }) => {
+const Content = ({ activeStep, handleNext, checked, handleChange, tabIndex, chatlist }) => {
 	const render = () => {
 		switch (activeStep) {
 			case 0:
@@ -31,7 +31,7 @@ const Content = ({ activeStep, handleNext, checked, handleChange, tabIndex }) =>
 			case 1:
 				return <ChatSearchUser activeStep={activeStep} checked={checked} handleChange={handleChange} />;
 			case 2:
-				return <ChatRoomTabPanel tabIndex={tabIndex} />;
+				return <ChatRoomTabPanel chatlist={chatlist} tabIndex={tabIndex} />;
 			default:
 				return null;
 		}

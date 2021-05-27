@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import InstagramAppBar from '../../components/appBar/SearchAppBar';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Grid, Box, IconButton, Button, Tooltip, Paper, MobileStepper } from '@material-ui/core';
@@ -7,10 +7,13 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import { renderHeader } from './SidebarHeader';
 import { ChatList } from './ChatList';
+
 import Content from './Content';
+
+import { useChatList } from './util';
 const Chat = () => {
 	const theme = useTheme();
-	const [checked, setChecked] = React.useState(true);
+	const [checked, setChecked] = React.useState(false);
 
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
@@ -21,11 +24,13 @@ const Chat = () => {
 	const handleTabChange = (event, newValue) => {
 		setTabIndex(newValue);
 	};
+
 	const [activeStep, setActiveStep] = React.useState(0);
+	//keep track of selected user
+	const chatlist = useChatList(activeStep, checked);
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		setChecked(!checked);
 	};
 
 	const handleBack = () => {
@@ -132,7 +137,7 @@ const Chat = () => {
 							/>
 						</Box>
 
-						{/*Messenger container */}
+						{/*chatlist container */}
 
 						<Box
 							sx={{
@@ -144,9 +149,14 @@ const Chat = () => {
 								width: '100%',
 								overflowY: 'hidden'
 							}}>
-							{/*Messenger 1 */}
+							{/*list 1 */}
 
-							<ChatList activeStep={activeStep} tabIndex={tabIndex} handleTabChange={handleTabChange} />
+							<ChatList
+								chatlist={chatlist}
+								activeStep={activeStep}
+								tabIndex={tabIndex}
+								handleTabChange={handleTabChange}
+							/>
 						</Box>
 					</Grid>
 
@@ -167,6 +177,7 @@ const Chat = () => {
 							justifyContent: 'center'
 						}}>
 						<Content
+							chatlist={chatlist}
 							handleNext={handleNext}
 							activeStep={activeStep}
 							checked={checked}

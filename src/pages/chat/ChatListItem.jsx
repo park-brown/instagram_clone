@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Avatar, Typography } from '@material-ui/core';
 
-const ChatListItem = () => {
+const ChatListItem = ({ item }) => {
+	const { username } = item;
 	return (
 		<Box
 			sx={{
@@ -24,12 +25,10 @@ const ChatListItem = () => {
 					height: '100%',
 					ml: '10px'
 				}}>
-				<Typography variant='subtitle1' width={116} height={24}>
-					fullname
-				</Typography>
-				<Typography variant='subtitle2' width={84} height={24}>
-					username
-				</Typography>
+				<Typography variant='subtitle1'>{username}</Typography>
+				{/* <Typography variant='subtitle2' width={84} height={24}>
+					{username}
+				</Typography> */}
 			</Box>
 		</Box>
 	);

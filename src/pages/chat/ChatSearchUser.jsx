@@ -17,11 +17,11 @@ const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 		{
 			collection: 'users',
 			where: ['username', '==', `${formik.values.userInput}`],
-			limit: 10
+			limit: 1
 		}
 	]);
 
-	const targetedUser = useSelector((state) => state.firestore.ordered.users);
+	const selected = useSelector((state) => state.firestore.ordered.users);
 
 	return (
 		<Grid
@@ -75,9 +75,9 @@ const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 						<Typography variant='h6' sx={{ my: '2rem' }}>
 							suggestion
 						</Typography>
-						<Typography variant='body1'>No account found</Typography>
+						<Typography variant='body1'>please search for a user</Typography>
 					</Box>
-				) : isEmpty(targetedUser) === true ? (
+				) : isEmpty(selected) === true ? (
 					<Box
 						sx={{
 							display: 'flex',
@@ -124,10 +124,10 @@ const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 								ml: '10px'
 							}}>
 							<Typography variant='body1' width={116} height={24}>
-								{targetedUser[0].fullName}
+								{selected[0].fullName}
 							</Typography>
 							<Typography variant='body2' width={84} height={24}>
-								{targetedUser[0].username}
+								{selected[0].username}
 							</Typography>
 						</Box>
 						<Checkbox color='primary' checked={checked} onChange={handleChange}></Checkbox>
