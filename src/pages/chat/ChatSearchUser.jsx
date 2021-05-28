@@ -3,8 +3,10 @@ import { Grid, Box, Typography, InputBase, Skeleton, Avatar, Checkbox } from '@m
 import { useFirestoreConnect, isEmpty } from 'react-redux-firebase';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import ChatSearchDropDownSkeleton from './ChatSearchDropDownSkeleton';
+import ChatSearchHistory from './ChatSearchHistory';
 
-const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
+const ChatSearchUser = ({ checked, handleChange, activeStep, chatlist, handleTabChange }) => {
 	const formik = useFormik({
 		initialValues: {
 			userInput: ''
@@ -68,40 +70,19 @@ const ChatSearchUser = ({ checked, handleChange, activeStep }) => {
 					flexDirection: 'column',
 					alignItems: 'flex-start'
 				}}>
-				{' '}
 				{/*Suggestion drop down go here */}
-				{formik.values.userInput === '' ? (
+				{!chatlist ? (
 					<Box sx={{ width: '50%', height: '50%', ml: '1rem' }}>
 						<Typography variant='h6' sx={{ my: '2rem' }}>
 							suggestion
 						</Typography>
 						<Typography variant='body1'>please search for a user</Typography>
 					</Box>
-				) : isEmpty(selected) === true ? (
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'row',
-							alignItems: 'center',
-							justifyContent: 'flex-start',
-							width: '100%',
-							py: '8px',
-							px: '16px'
-						}}>
-						<Skeleton variant='circular' width={56} height={56} />
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'column',
-								alignItems: 'flex-start',
-								flexGrow: 1,
-								height: '100%',
-								ml: '10px'
-							}}>
-							<Skeleton variant='text' width={116} height={24} />
-							<Skeleton variant='text' width={84} height={24} />
-						</Box>
-					</Box>
+				) : isEmpty(selected) ? (
+					<React.Fragment>
+						<ChatSearchDropDownSkeleton />
+						<ChatSearchHistory handleTabChange={handleTabChange} chatlist={chatlist} activeStep={activeStep} />
+					</React.Fragment>
 				) : (
 					<Box
 						sx={{

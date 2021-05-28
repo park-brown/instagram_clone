@@ -7,13 +7,14 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
-import { useFirestoreConnect, isEmpty, useFirestore } from 'react-redux-firebase';
+import { useFirestoreConnect, isEmpty, useFirestore, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 const validationSchema = yup.object({
 	message: yup.string('Enter your email').min(1).max(140).required('please enter some text')
 });
 const ChatRoom = ({ item }) => {
 	const { userId, username } = useSelector((state) => state.firebase.profile);
+	const { chatRoom } = useSelector((state) => state.firestore.data);
 	const { username: name, userId: id } = item;
 	const firestore = useFirestore();
 	useFirestoreConnect({
@@ -21,13 +22,18 @@ const ChatRoom = ({ item }) => {
 		where: ['members', '==', [`${userId}`, `${id}`]],
 		storeAs: 'chatRoom'
 	});
-
-	const { chatRoom } = useSelector((state) => state.firestore.data);
+	const isChatRoomLoaded = isLoaded(chatRoom);
+	const isChatRoomEmpty = isEmpty(chatRoom);
 	useEffect(() => {
-		if (isEmpty(chatRoom)) {
+		// if chatRoom data have not loaded ,do nothing;
+		if (!isChatRoomLoaded) {
+			return;
+		}
+		// if data loaded, check if chatRoom have created or not, if empty, create one
+		if (isChatRoomEmpty) {
 			return firestore.collection('chatRoom').add({ members: [userId, id], nameList: [username, name] });
 		}
-	}, [id, name, chatRoom, userId, username]);
+	}, [id, name, userId, username, isChatRoomLoaded, isChatRoomEmpty]);
 
 	const [chosenEmoji, setChosenEmoji] = useState(null);
 	const [showEmoji, setShowEmoji] = useState(false);

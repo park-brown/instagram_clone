@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import InstagramAppBar from '../../components/appBar/SearchAppBar';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Grid, Box, IconButton, Button, Tooltip, Paper, MobileStepper } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import { renderHeader } from './SidebarHeader';
+import { RenderHeader } from './SidebarHeader';
 import { ChatList } from './ChatList';
 
 import Content from './Content';
@@ -18,17 +18,16 @@ const Chat = () => {
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
 	};
+
+	const [activeStep, setActiveStep] = React.useState(0);
+	//keep track of selected user
+	const chatlist = useChatList(activeStep, checked);
 	//set Tab index state
 	const [tabIndex, setTabIndex] = React.useState(0);
 
 	const handleTabChange = (event, newValue) => {
 		setTabIndex(newValue);
 	};
-
-	const [activeStep, setActiveStep] = React.useState(0);
-	//keep track of selected user
-	const chatlist = useChatList(activeStep, checked);
-
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
@@ -92,7 +91,7 @@ const Chat = () => {
 								width: '100%',
 								position: 'relative'
 							}}>
-							{renderHeader(activeStep)}
+							<RenderHeader activeStep={activeStep} />
 
 							<MobileStepper
 								variant='dots'
@@ -182,6 +181,7 @@ const Chat = () => {
 							activeStep={activeStep}
 							checked={checked}
 							handleChange={handleChange}
+							handleTabChange={handleTabChange}
 							tabIndex={tabIndex}
 						/>
 					</Grid>

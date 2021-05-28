@@ -390,13 +390,13 @@ const Submit = () => {
 				</Grid>
 				{/*side content */}
 				<Grid item lg={4} md={4}>
-					<Paper sx={{ ml: '24px', p: '12px' }}>
+					<Paper sx={{ ml: '24px', p: '12px', display: { md: 'block', sm: 'none', xs: 'none' } }}>
 						<Box sx={{ display: 'flex', alignItems: 'center' }}>
 							<GavelSharpIcon sx={{ width: 30, height: 30, mr: '12px' }} />
 							<Typography variant='h6'>Posting rule</Typography>
 						</Box>
 						<Divider sx={{ mt: '6px' }} />
-						<Box sx={{ display: 'flex', flexDirection: 'column' }}>
+						<Box sx={{ display: { md: 'flex', sm: 'none', xs: 'none' }, flexDirection: 'column' }}>
 							<Typography variant='body1' sx={{ py: '10px', px: '5px' }}>
 								1. Remember the human
 							</Typography>
