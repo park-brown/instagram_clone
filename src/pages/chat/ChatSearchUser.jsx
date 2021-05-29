@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Typography, InputBase, Skeleton, Avatar, Checkbox } from '@material-ui/core';
+import { Grid, Box, Typography, InputBase, Avatar, Checkbox } from '@material-ui/core';
 import { useFirestoreConnect, isEmpty } from 'react-redux-firebase';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';

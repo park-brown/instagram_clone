@@ -28,6 +28,7 @@ const ChatSearchHistory = ({ chatlist, activeStep, handleTabChange }) => {
 							sx={{
 								display: 'flex',
 								flexDirection: 'column',
+								justifyContent: 'center',
 								alignItems: 'flex-start',
 								flexGrow: 1,
 								height: '100%',

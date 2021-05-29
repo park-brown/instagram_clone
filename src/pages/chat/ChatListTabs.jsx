@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 const ChatListTabs = ({ tabIndex, handleTabChange, chatlist }) => {
 	const { users } = useSelector((state) => state.firestore.data);
 	const { chatRoom } = useSelector((state) => state.firestore.data);
-	//effect for users change
+	//effect for users change,only run on first mount,leave dependency array empty
 	useEffect(() => {
 		let isMounted = true;
 		if (users) {
@@ -17,10 +17,11 @@ const ChatListTabs = ({ tabIndex, handleTabChange, chatlist }) => {
 				handleTabChange(null, index);
 			}
 		}
+
 		return () => {
 			isMounted = false;
 		};
-	}, [chatlist, users, handleTabChange]);
+	}, []);
 
 	return (
 		<Tabs

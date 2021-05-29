@@ -159,7 +159,10 @@ const NavIconBox = () => {
 					</ListItemIcon>
 					<ListItemText>Saved</ListItemText>
 				</MenuItem>
-				<MenuItem onClick={handleClose}>
+				<MenuItem
+					onClick={() => {
+						handleClose(`/accounts/edit`);
+					}}>
 					<ListItemIcon>
 						<SettingsOutlinedIcon />
 					</ListItemIcon>
